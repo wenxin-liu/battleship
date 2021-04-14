@@ -21,9 +21,6 @@ class Canvas {
 
   def updateCanvas(start: (Int, Int), end: (Int, Int), canvas: Map[(Int, Int), Int]): Map[(Int, Int), Int] = {
     val ship = new Ship(startX = start._1,startY = start._2, endX = end._1, endY = end._2, canvas)
-
-    if (ship.validate) {
-        ship.updateLocation
-    } else canvas
+    ship.updateLocation()
   }
 }
