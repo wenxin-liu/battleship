@@ -20,19 +20,10 @@ class Canvas {
     )
 
   def updateCanvas(start: (Int, Int), end: (Int, Int), canvas: Map[(Int, Int), Int]): Map[(Int, Int), Int] = {
-    val coordinates = Coordinates(Start(x = start._1-1, y = start._2-1), End(x = end._1-1, y = end._2-1))
-    val submarine =
-      coordinates.start.x == coordinates.end.x && coordinates.start.y == coordinates.end.y
-    val shipIsHorizontal =
-      coordinates.end.x - coordinates.start.x != 0 && coordinates.end.y - coordinates.start.y == 0
-    val shipIsVertical =
-      coordinates.end.x - coordinates.start.x == 0 && coordinates.end.y - coordinates.start.y != 0
+    val ship = new Ship(startX = start._1,startY = start._2, endX = end._1, endY = end._2, canvas)
 
-    coordinates match {
-      case _ if submarine || shipIsHorizontal || shipIsVertical =>
-        val ship = new Ship(coordinates.start.x, coordinates.start.y, coordinates.end.x, coordinates.end.y, canvas)
+    if (ship.validate) {
         ship.updateLocation
-      case _ => canvas
-    }
+    } else canvas
   }
 }
