@@ -29,8 +29,8 @@ class CanvasTest extends AnyFlatSpec with Matchers{
         List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
         List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
         List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-        List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
         List(0, 1, 0, 0, 0, 0, 0, 0, 0, 0),
+        List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
         List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
         List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
       )
@@ -65,6 +65,38 @@ class CanvasTest extends AnyFlatSpec with Matchers{
         List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
         List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
         List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+      )
+  }
+
+  it should "have a destroyer (2 cells) at 2,3 to 2,4" in {
+    canvas.updateCanvas(start = (2, 3), end = (2, 4), canvas = canvas.drawCanvas) shouldBe
+      List(
+        List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        List(0, 1, 0, 0, 0, 0, 0, 0, 0, 0),
+        List(0, 1, 0, 0, 0, 0, 0, 0, 0, 0),
+        List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+      )
+  }
+
+  it should "have a battleship (4 cells) at 10,7 to 10,10" in {
+    canvas.updateCanvas(start = (10, 7), end = (10, 10), canvas = canvas.drawCanvas) shouldBe
+      List(
+        List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        List(0, 0, 0, 0, 0, 0, 0, 0, 0, 1),
+        List(0, 0, 0, 0, 0, 0, 0, 0, 0, 1),
+        List(0, 0, 0, 0, 0, 0, 0, 0, 0, 1),
+        List(0, 0, 0, 0, 0, 0, 0, 0, 0, 1),
       )
   }
 

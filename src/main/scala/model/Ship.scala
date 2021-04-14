@@ -1,14 +1,22 @@
 package model
 
-class Ship {
-  val oneByOne = List((1, 1))
+class Ship(startX: Int, startY: Int, endX: Int, endY: Int, canvas: List[List[Int]]) {
+  private val lineIsHorizontal = endX - startX != 0 && endY - startY == 0
+  private val lineIsVertical = endX - startX == 0 && endY - startY != 0
 
-  val oneByTwo = List((1, 1), (1, 2))
-  val twoByOne = List((1, 1), (2, 1))
+  def updateLocation: List[List[Int]] = {
+    var newCanvas: List[List[Int]] = canvas
 
-  val oneByThree = List((1, 1), (1, 3))
-  val threeByOne = List((1, 1), (3, 1))
-
-  val oneByFour = List((1, 1), (1, 4))
-  val fourByOne = List((1, 1), (4, 1))
+    if (lineIsHorizontal) {
+      for (i <- startX to endX) {
+        newCanvas = canvas.updated(startY, newCanvas(startY).updated(i, 1))
+      }
+      newCanvas
+    } else if (lineIsVertical) {
+      for (i <- startY to endY) {
+        newCanvas = newCanvas.updated(i, canvas(i).updated(startX, 1))
+      }
+      newCanvas
+    } else canvas
+  }
 }

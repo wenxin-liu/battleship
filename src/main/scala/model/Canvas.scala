@@ -1,5 +1,9 @@
 package model
 
+case class Coordinates(start: Start, end: End)
+case class Start(x: Int, y: Int)
+case class End(x: Int, y: Int)
+
 class Canvas {
   def drawCanvas =
     List(
@@ -16,24 +20,24 @@ class Canvas {
     )
 
   def updateCanvas(start: (Int, Int), end: (Int, Int), canvas: List[List[Int]]): List[List[Int]] = {
-    val lineIsHorizontal = end._1 - start._1 != 0 && end._2 - start._2 == 0
-    val lineIsVertical = end._1 - start._1 == 0 && end._2 - start._2 != 0
+    val coordinates = Coordinates(Start(x = start._1-1, y = start._2-1), End(x = end._1-1, y = end._2-1))
+    val submarine =
+      coordinates.start.x == coordinates.end.x && coordinates.start.y == coordinates.end.y
+    val lineIsHorizontal =
+      coordinates.end.x - coordinates.start.x != 0 && coordinates.end.y - coordinates.start.y == 0
+    val lineIsVertical =
+      coordinates.end.x - coordinates.start.x == 0 && coordinates.end.y - coordinates.start.y != 0
 
-    if (start == end)
-      canvas.updated(start._2-1, canvas(start._2-1).updated(start._1-1, 1))
-    else if (start != end) {
-      if (lineIsHorizontal) {
-        var newCanvas: List[List[Int]] = canvas
-        for (i <- start._1 - 1 to end._1 - 1) {
-          newCanvas = updateHorizontalShip(i, start._2-1, newCanvas)
-        }
-        newCanvas
-      } else if (lineIsVertical) {
-        ???
-      } else canvas
-    } else canvas
-}
-  def updateHorizontalShip(x: Int, y: Int, canvas: List[List[Int]]): List[List[Int]] = {
-    canvas.updated(y, canvas(y).updated(x, 1))
+    coordinates match {
+      case _ if submarine  =>
+        canvas.updated(coordinates.start.y, canvas(coordinates.start.y).updated(coordinates.start.x, 1))
+      case _ if lineIsHorizontal =>
+        val ship = new Ship(coordinates.start.x, coordinates.start.y, coordinates.end.x, coordinates.start.y, canvas)
+        ship.updateLocation
+      case _ if lineIsVertical =>
+        val ship = new Ship(coordinates.start.x, coordinates.start.y, coordinates.start.x, coordinates.end.y, canvas)
+        ship.updateLocation
+      case _ => canvas
+    }
   }
 }
