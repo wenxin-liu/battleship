@@ -6,36 +6,31 @@ case class End(x: Int, y: Int)
 
 class Canvas {
   def drawCanvas =
-    List(
-      List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-      List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-      List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-      List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-      List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-      List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-      List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-      List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-      List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-      List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+    Map(
+      (0, 0) -> 0, (1, 0) -> 0, (2, 0) -> 0, (3, 0) -> 0, (4, 0) -> 0, (5, 0) -> 0, (6, 0) -> 0, (7, 0) -> 0, (8, 0) -> 0, (9, 0) -> 0,
+      (0, 1) -> 0, (1, 1) -> 0, (2, 1) -> 0, (3, 1) -> 0, (4, 1) -> 0, (5, 1) -> 0, (6, 1) -> 0, (7, 1) -> 0, (8, 1) -> 0, (9, 1) -> 0,
+      (0, 2) -> 0, (1, 2) -> 0, (2, 2) -> 0, (3, 2) -> 0, (4, 2) -> 0, (5, 2) -> 0, (6, 2) -> 0, (7, 2) -> 0, (8, 2) -> 0, (9, 2) -> 0,
+      (0, 3) -> 0, (1, 3) -> 0, (2, 3) -> 0, (3, 3) -> 0, (4, 3) -> 0, (5, 3) -> 0, (6, 3) -> 0, (7, 3) -> 0, (8, 3) -> 0, (9, 3) -> 0,
+      (0, 4) -> 0, (1, 4) -> 0, (2, 4) -> 0, (3, 4) -> 0, (4, 4) -> 0, (5, 4) -> 0, (6, 4) -> 0, (7, 4) -> 0, (8, 4) -> 0, (9, 4) -> 0,
+      (0, 5) -> 0, (1, 5) -> 0, (2, 5) -> 0, (3, 5) -> 0, (4, 5) -> 0, (5, 5) -> 0, (6, 5) -> 0, (7, 5) -> 0, (8, 5) -> 0, (9, 5) -> 0,
+      (0, 6) -> 0, (1, 6) -> 0, (2, 6) -> 0, (3, 6) -> 0, (4, 6) -> 0, (5, 6) -> 0, (6, 6) -> 0, (7, 6) -> 0, (8, 6) -> 0, (9, 6) -> 0,
+      (0, 7) -> 0, (1, 7) -> 0, (2, 7) -> 0, (3, 7) -> 0, (4, 7) -> 0, (5, 7) -> 0, (6, 7) -> 0, (7, 7) -> 0, (8, 7) -> 0, (9, 7) -> 0,
+      (0, 8) -> 0, (1, 8) -> 0, (2, 8) -> 0, (3, 8) -> 0, (4, 8) -> 0, (5, 8) -> 0, (6, 8) -> 0, (7, 8) -> 0, (8, 8) -> 0, (9, 8) -> 0,
+      (0, 9) -> 0, (1, 9) -> 0, (2, 9) -> 0, (3, 9) -> 0, (4, 9) -> 0, (5, 9) -> 0, (6, 9) -> 0, (7, 9) -> 0, (8, 9) -> 0, (9, 9) -> 0
     )
 
-  def updateCanvas(start: (Int, Int), end: (Int, Int), canvas: List[List[Int]]): List[List[Int]] = {
+  def updateCanvas(start: (Int, Int), end: (Int, Int), canvas: Map[(Int, Int), Int]): Map[(Int, Int), Int] = {
     val coordinates = Coordinates(Start(x = start._1-1, y = start._2-1), End(x = end._1-1, y = end._2-1))
     val submarine =
       coordinates.start.x == coordinates.end.x && coordinates.start.y == coordinates.end.y
-    val lineIsHorizontal =
+    val shipIsHorizontal =
       coordinates.end.x - coordinates.start.x != 0 && coordinates.end.y - coordinates.start.y == 0
-    val lineIsVertical =
+    val shipIsVertical =
       coordinates.end.x - coordinates.start.x == 0 && coordinates.end.y - coordinates.start.y != 0
 
     coordinates match {
-      case _ if submarine  =>
-        canvas.updated(coordinates.start.y, canvas(coordinates.start.y).updated(coordinates.start.x, 1))
-      case _ if lineIsHorizontal =>
-        val ship = new Ship(coordinates.start.x, coordinates.start.y, coordinates.end.x, coordinates.start.y, canvas)
-        ship.updateLocation
-      case _ if lineIsVertical =>
-        val ship = new Ship(coordinates.start.x, coordinates.start.y, coordinates.start.x, coordinates.end.y, canvas)
+      case _ if submarine || shipIsHorizontal || shipIsVertical =>
+        val ship = new Ship(coordinates.start.x, coordinates.start.y, coordinates.end.x, coordinates.end.y, canvas)
         ship.updateLocation
       case _ => canvas
     }
