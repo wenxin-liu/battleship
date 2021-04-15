@@ -6,7 +6,7 @@ import org.scalatest.matchers.should.Matchers
 class ShipTest extends AnyFlatSpec with Matchers {
   it should "have a submarine (1 cell) at 2,7" in {
     helper.cleanTestState
-    val ship = new Ship(startX = 2, startY = 7, endX = 2, endY = 7, canvas = Canvas.drawCanvas)
+    val ship = new Ship(startX = 2, startY = 7, endX = 2, endY = 7, canvas = newCanvas)
 
     ship.updateLocation() shouldBe
       Map(
@@ -25,7 +25,7 @@ class ShipTest extends AnyFlatSpec with Matchers {
 
   it should "have a battleship (4 cells) at 2,3 to 5,3" in {
     helper.cleanTestState
-    val ship = new Ship(startX = 2, startY = 3, endX = 5, endY = 3, canvas = Canvas.drawCanvas)
+    val ship = new Ship(startX = 2, startY = 3, endX = 5, endY = 3, canvas = newCanvas)
 
     ship.updateLocation() shouldBe
       Map(
@@ -44,7 +44,7 @@ class ShipTest extends AnyFlatSpec with Matchers {
 
   it should "have a cruiser (3 cells) at 6,7 to 8,7" in {
     helper.cleanTestState
-    val ship = new Ship(startX = 6, startY = 7, endX = 8, endY = 7, canvas = Canvas.drawCanvas)
+    val ship = new Ship(startX = 6, startY = 7, endX = 8, endY = 7, canvas = newCanvas)
 
     ship.updateLocation() shouldBe
       Map(
@@ -63,7 +63,7 @@ class ShipTest extends AnyFlatSpec with Matchers {
 
   it should "have a destroyer (2 cells) at 2,3 to 2,4" in {
     helper.cleanTestState
-    val ship = new Ship(startX = 2, startY = 3, endX = 2, endY = 4, canvas = Canvas.drawCanvas)
+    val ship = new Ship(startX = 2, startY = 3, endX = 2, endY = 4, canvas = newCanvas)
 
     ship.updateLocation() shouldBe
       Map(
@@ -82,7 +82,7 @@ class ShipTest extends AnyFlatSpec with Matchers {
 
   it should "have a battleship (4 cells) at 10,7 to 10,10" in {
     helper.cleanTestState
-    val ship = new Ship(startX = 10, startY = 7, endX = 10, endY = 10, canvas = Canvas.drawCanvas)
+    val ship = new Ship(startX = 10, startY = 7, endX = 10, endY = 10, canvas = newCanvas)
 
     ship.updateLocation() shouldBe
       Map(
@@ -101,7 +101,7 @@ class ShipTest extends AnyFlatSpec with Matchers {
 
   it should "not have ships in adjacent cells" in {
     helper.cleanTestState
-    lazy val firstShip = new Ship(startX = 10, startY = 7, endX = 10, endY = 10, canvas = Canvas.drawCanvas).updateLocation()
+    lazy val firstShip = new Ship(startX = 10, startY = 7, endX = 10, endY = 10, canvas = newCanvas).updateLocation()
     lazy val secondShip = new Ship(startX = 9, startY = 8, endX = 9, endY = 10, canvas = firstShip).updateLocation()
     lazy val result = new Ship(startX = 1, startY = 1, endX = 2, endY = 1, canvas = secondShip).updateLocation()
 
@@ -122,7 +122,7 @@ class ShipTest extends AnyFlatSpec with Matchers {
 
   it should "only have valid ship types" in {
     helper.cleanTestState
-    val ship = new Ship(startX = 10, startY = 6, endX = 10, endY = 10, canvas = Canvas.drawCanvas)
+    val ship = new Ship(startX = 10, startY = 6, endX = 10, endY = 10, canvas = newCanvas)
 
     ship.updateLocation() shouldBe
       Map(
@@ -141,7 +141,7 @@ class ShipTest extends AnyFlatSpec with Matchers {
 
   it should "only allow one submarine (1x1) on the canvas" in {
     helper.cleanTestState
-    val firstSubmarine = new Ship(startX = 1, startY = 1, endX = 1, endY = 1, canvas = Canvas.drawCanvas).updateLocation()
+    val firstSubmarine = new Ship(startX = 1, startY = 1, endX = 1, endY = 1, canvas = newCanvas).updateLocation()
     val result = new Ship(startX = 3, startY = 3, endX = 3, endY = 3, canvas = firstSubmarine).updateLocation()
 
     result shouldBe
@@ -161,7 +161,7 @@ class ShipTest extends AnyFlatSpec with Matchers {
 
   it should "only allow one destroyer (2x1) on the canvas (covers horizontal ship logic)" in {
     helper.cleanTestState
-    val firstDestroyer = new Ship(startX = 1, startY = 1, endX = 2, endY = 1, canvas = Canvas.drawCanvas).updateLocation()
+    val firstDestroyer = new Ship(startX = 1, startY = 1, endX = 2, endY = 1, canvas = newCanvas).updateLocation()
     val result = new Ship(startX = 3, startY = 3, endX = 4, endY = 3, canvas = firstDestroyer).updateLocation()
 
     result shouldBe
@@ -181,7 +181,7 @@ class ShipTest extends AnyFlatSpec with Matchers {
 
   it should "only allow one destroyer (2x1) on the canvas (covers vertical ship logic)" in {
     helper.cleanTestState
-    val firstDestroyer = new Ship(startX = 1, startY = 1, endX = 1, endY = 2, canvas = Canvas.drawCanvas).updateLocation()
+    val firstDestroyer = new Ship(startX = 1, startY = 1, endX = 1, endY = 2, canvas = newCanvas).updateLocation()
     val result = new Ship(startX = 3, startY = 3, endX = 3, endY = 4, canvas = firstDestroyer).updateLocation()
 
     result shouldBe
@@ -201,7 +201,7 @@ class ShipTest extends AnyFlatSpec with Matchers {
 
   it should "only allow one cruiser (3x1) on the canvas (covers horizontal ship logic)" in {
     helper.cleanTestState
-    val firstCruiser = new Ship(startX = 1, startY = 1, endX = 3, endY = 1, canvas = Canvas.drawCanvas).updateLocation()
+    val firstCruiser = new Ship(startX = 1, startY = 1, endX = 3, endY = 1, canvas = newCanvas).updateLocation()
     val result = new Ship(startX = 3, startY = 3, endX = 5, endY = 3, canvas = firstCruiser).updateLocation()
 
     result shouldBe
@@ -221,7 +221,7 @@ class ShipTest extends AnyFlatSpec with Matchers {
 
   it should "only allow one cruiser (3x1) on the canvas (covers vertical ship logic)" in {
     helper.cleanTestState
-    val firstCruiser = new Ship(startX = 1, startY = 1, endX = 1, endY = 3, canvas = Canvas.drawCanvas).updateLocation()
+    val firstCruiser = new Ship(startX = 1, startY = 1, endX = 1, endY = 3, canvas = newCanvas).updateLocation()
     val result = new Ship(startX = 3, startY = 3, endX = 3, endY = 5, canvas = firstCruiser).updateLocation()
 
     result shouldBe
@@ -241,7 +241,7 @@ class ShipTest extends AnyFlatSpec with Matchers {
 
   it should "only allow one battleship (4x1) on the canvas (covers horizontal ship logic)" in {
     helper.cleanTestState
-    val firstBattleship = new Ship(startX = 1, startY = 1, endX = 4, endY = 1, canvas = Canvas.drawCanvas).updateLocation()
+    val firstBattleship = new Ship(startX = 1, startY = 1, endX = 4, endY = 1, canvas = newCanvas).updateLocation()
     val result = new Ship(startX = 3, startY = 3, endX = 6, endY = 3, canvas = firstBattleship).updateLocation()
 
     result shouldBe
@@ -261,7 +261,7 @@ class ShipTest extends AnyFlatSpec with Matchers {
 
   it should "only allow one battleship (4x1) on the canvas (covers vertical ship logic)" in {
     helper.cleanTestState
-    val firstBattleship = new Ship(startX = 1, startY = 1, endX = 1, endY = 4, canvas = Canvas.drawCanvas).updateLocation()
+    val firstBattleship = new Ship(startX = 1, startY = 1, endX = 1, endY = 4, canvas = newCanvas).updateLocation()
     val result = new Ship(startX = 3, startY = 3, endX = 3, endY = 6, canvas = firstBattleship).updateLocation()
 
     result shouldBe
@@ -278,4 +278,6 @@ class ShipTest extends AnyFlatSpec with Matchers {
         (0, 9) -> 0, (1, 9) -> 0, (2, 9) -> 0, (3, 9) -> 0, (4, 9) -> 0, (5, 9) -> 0, (6, 9) -> 0, (7, 9) -> 0, (8, 9) -> 0, (9, 9) -> 0
       )
   }
+
+  lazy val newCanvas: Map[(Int, Int), Int] = Canvas.apply.makeCanvas.getCanvas
 }

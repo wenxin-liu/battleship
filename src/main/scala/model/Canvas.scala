@@ -4,9 +4,9 @@ case class Coordinates(start: Start, end: End)
 case class Start(x: Int, y: Int)
 case class End(x: Int, y: Int)
 
-object Canvas {
-  def drawCanvas =
-    Map(
+class Canvas(canvas: Map[(Int, Int), Int]) {
+  def makeCanvas: Canvas = {
+    val canvas = Map(
       (0, 0) -> 0, (1, 0) -> 0, (2, 0) -> 0, (3, 0) -> 0, (4, 0) -> 0, (5, 0) -> 0, (6, 0) -> 0, (7, 0) -> 0, (8, 0) -> 0, (9, 0) -> 0,
       (0, 1) -> 0, (1, 1) -> 0, (2, 1) -> 0, (3, 1) -> 0, (4, 1) -> 0, (5, 1) -> 0, (6, 1) -> 0, (7, 1) -> 0, (8, 1) -> 0, (9, 1) -> 0,
       (0, 2) -> 0, (1, 2) -> 0, (2, 2) -> 0, (3, 2) -> 0, (4, 2) -> 0, (5, 2) -> 0, (6, 2) -> 0, (7, 2) -> 0, (8, 2) -> 0, (9, 2) -> 0,
@@ -19,8 +19,18 @@ object Canvas {
       (0, 9) -> 0, (1, 9) -> 0, (2, 9) -> 0, (3, 9) -> 0, (4, 9) -> 0, (5, 9) -> 0, (6, 9) -> 0, (7, 9) -> 0, (8, 9) -> 0, (9, 9) -> 0
     )
 
-  def updateCanvas(start: (Int, Int), end: (Int, Int), canvas: Map[(Int, Int), Int]): Map[(Int, Int), Int] = {
-    val ship = new Ship(startX = start._1,startY = start._2, endX = end._1, endY = end._2, canvas)
-    ship.updateLocation()
+    new Canvas(canvas)
   }
+
+  def getCanvas: Map[(Int, Int), Int] = this.canvas
+
+  def putShip(start: (Int, Int), end: (Int, Int), canvas: Map[(Int, Int), Int] = this.canvas): Canvas = {
+    val ship = new Ship(startX = start._1,startY = start._2, endX = end._1, endY = end._2, canvas)
+
+    new Canvas(ship.updateLocation())
+  }
+}
+
+object Canvas {
+  def apply: Canvas = new Canvas(Map())
 }
