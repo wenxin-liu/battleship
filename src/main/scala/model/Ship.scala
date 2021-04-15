@@ -6,11 +6,12 @@ case object Destroyers extends ShipType
 case object Cruisers extends ShipType
 case object Battleships extends ShipType
 
+//TODO: refactor class constructor to take Coordinates type instead of coordinates of type Int
 class Ship(startX: Int, startY: Int, endX: Int, endY: Int, canvas: Map[(Int, Int), Int]) {
   var IsPlaced = false
   private val coordinates = Coordinates(Start(x = startX - 1, y = startY - 1), End(x = endX - 1, y = endY - 1))
 
-  private val submarine =
+  protected val submarine: Boolean =
     coordinates.start.x == coordinates.end.x && coordinates.start.y == coordinates.end.y
   private val shipIsHorizontal =
     coordinates.end.x - coordinates.start.x != 0 && coordinates.end.y - coordinates.start.y == 0
@@ -29,14 +30,20 @@ class Ship(startX: Int, startY: Int, endX: Int, endY: Int, canvas: Map[(Int, Int
   private val verticalBattleship =
     coordinates.end.y - coordinates.start.y == 3 && coordinates.end.x - coordinates.start.x == 0
 
-  private val validType: Boolean = {
+  protected val validType: Boolean = {
     coordinates match {
-      case _ if submarine || shipIsHorizontal || shipIsVertical => true
+      case _ if submarine
+        | horizontalDestroyer
+        | verticalDestroyer
+        | horizontalCruiser
+        | verticalCruiser
+        | horizontalBattleship
+        | verticalBattleship => true
       case _ => false
     }
   }
 
-  private val validLocation: Boolean = {
+  protected val validLocation: Boolean = {
     val fullShipCoordinates: Seq[(Int, Int)] =
       for {
         i <- coordinates.start.x to coordinates.end.x
@@ -55,12 +62,6 @@ class Ship(startX: Int, startY: Int, endX: Int, endY: Int, canvas: Map[(Int, Int
     else
       true
   }
-  private val tooLong = if (
-    coordinates.end.x - coordinates.start.x >= 4 && coordinates.end.y - coordinates.start.y == 0
-      | coordinates.end.x - coordinates.start.x == 0 && coordinates.end.y - coordinates.start.y >= 4
-  ) true
-  else
-    false
 
   private def updateHorizontalShip(canvas: Map[(Int, Int), Int]) = {
     var newCanvas = canvas
@@ -106,7 +107,7 @@ class Ship(startX: Int, startY: Int, endX: Int, endY: Int, canvas: Map[(Int, Int
     newCanvas
   }
 
-  private def shipType = {
+  protected def shipType: Object = {
     coordinates match {
       case _ if submarine => Submarines
       case _ if horizontalDestroyer | verticalDestroyer => Destroyers
@@ -118,16 +119,27 @@ class Ship(startX: Int, startY: Int, endX: Int, endY: Int, canvas: Map[(Int, Int
 
   def updateLocation(): Map[(Int, Int), Int] = {
     coordinates match {
-      case _ if !validType | !validLocation | tooLong =>
+      case _ if !validType | !validLocation =>
         canvas
-      case _ if shipType == Submarines && Submarine.get => canvas
       case _ if shipType == Destroyers && Destroyer.get => canvas
       case _ if shipType == Cruisers && Cruiser.get => canvas
       case _ if shipType == Battleships && Battleship.get => canvas
-      case _ if submarine => Submarine.updateSubmarine(coordinates, canvas)
       case _ if shipIsHorizontal => updateHorizontalShip(canvas)
       case _ if shipIsVertical => updateVerticalShip(canvas)
       case _ => canvas
+    }
+  }
+}
+
+object Ship {
+  def apply(startX: Int, startY: Int, endX: Int, endY: Int, canvas: Map[(Int, Int), Int]): Ship = {
+    val coordinates = Coordinates(Start(x = startX - 1, y = startY - 1), End(x = endX - 1, y = endY - 1))
+    val submarine = coordinates.start.x == coordinates.end.x && coordinates.start.y == coordinates.end.y
+
+    coordinates match {
+      case _ if submarine =>
+        new Submarine(coordinates, canvas)
+      case _ => new Ship(startX, startY, endX, endY, canvas)
     }
   }
 }
