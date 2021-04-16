@@ -37,5 +37,5 @@ class CanvasTest extends AnyFlatSpec with Matchers {
       )
   }
 
-  lazy val newCanvas: Canvas = Canvas.apply.makeCanvas
+  private lazy val newCanvas = Canvas.apply.makeCanvas
 }

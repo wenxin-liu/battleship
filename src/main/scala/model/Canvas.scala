@@ -25,7 +25,7 @@ class Canvas(canvas: Map[(Int, Int), Int]) {
   def getCanvas: Map[(Int, Int), Int] = this.canvas
 
   def putShip(start: (Int, Int), end: (Int, Int), canvas: Map[(Int, Int), Int] = this.canvas): Canvas = {
-    val ship = new Ship(startX = start._1,startY = start._2, endX = end._1, endY = end._2, canvas)
+    val ship = Ship(startX = start._1,startY = start._2, endX = end._1, endY = end._2, canvas)
 
     new Canvas(ship.updateLocation())
   }

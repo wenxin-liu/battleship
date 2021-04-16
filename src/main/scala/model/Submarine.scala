@@ -1,11 +1,13 @@
 package model
 
-class Submarine (coordinates: Coordinates, canvas: Map[(Int, Int), Int])
-  extends Ship (coordinates.start.x, coordinates.start.y, coordinates.end.x, coordinates.end.y, canvas) {
+class Submarine(coordinates: Coordinates, canvas: Map[(Int, Int), Int]) extends Ship(coordinates, canvas) {
+  private val submarine: Boolean =
+    coordinates.start.x == coordinates.end.x && coordinates.start.y == coordinates.end.y
+  protected override val exceedsMaxNumber: Boolean = Submarine.get
+
   override def updateLocation(): Map[(Int, Int), Int] = {
     coordinates match {
-      case _ if !validLocation => canvas
-      case _ if shipType == Submarines && Submarine.get => canvas
+      case _ if !validLocation | exceedsMaxNumber => canvas
       case _ if submarine =>
         var newCanvas = canvas
 
