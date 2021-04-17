@@ -22,9 +22,11 @@ class Canvas(canvas: Map[(Int, Int), Int]) {
     new Canvas(canvas)
   }
 
-  def getCanvas: Map[(Int, Int), Int] = this.canvas
+  def getCanvas: Map[(Int, Int), Int] = canvas
 
-  def putShip(start: (Int, Int), end: (Int, Int), canvas: Map[(Int, Int), Int] = this.canvas): Canvas = {
+  //TODO: refactor parameter type from tuple2 to Int
+  //TODO: create Coordinates case class from Int parameters and pass to Ship factory method
+  def putShip(start: (Int, Int), end: (Int, Int)): Canvas = {
     val ship = Ship(startX = start._1,startY = start._2, endX = end._1, endY = end._2, canvas)
 
     new Canvas(ship.updateLocation())
