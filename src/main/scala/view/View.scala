@@ -6,7 +6,7 @@ object View {
 
     val row: IndexedSeq[String] = for {
       i <- 0 to 9
-    } yield "\u0020\u0020" + (for { j <- 0 to 9 } yield canvas(i, j)).mkString("\u0020\u0020")
+    } yield "\u0020\u0020" + (for { j <- 0 to 9 } yield canvas(j, i)).mkString("\u0020\u0020")
 
     val middleRows: String = (for {
       i <- 0 to 8

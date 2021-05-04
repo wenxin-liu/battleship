@@ -6,6 +6,11 @@ case class End(x: Int, y: Int)
 
 class Canvas(canvas: Map[(Int, Int), Int]) {
   def makeCanvas: Canvas = {
+    Submarine.set(false)
+    Cruiser.set(false)
+    Destroyer.set(false)
+    Battleship.set(false)
+
     val canvas = Map(
       (0, 0) -> 0, (1, 0) -> 0, (2, 0) -> 0, (3, 0) -> 0, (4, 0) -> 0, (5, 0) -> 0, (6, 0) -> 0, (7, 0) -> 0, (8, 0) -> 0, (9, 0) -> 0,
       (0, 1) -> 0, (1, 1) -> 0, (2, 1) -> 0, (3, 1) -> 0, (4, 1) -> 0, (5, 1) -> 0, (6, 1) -> 0, (7, 1) -> 0, (8, 1) -> 0, (9, 1) -> 0,
@@ -24,10 +29,28 @@ class Canvas(canvas: Map[(Int, Int), Int]) {
 
   def getCanvas: Map[(Int, Int), Int] = canvas
 
-  //TODO: refactor parameter type from tuple2 to Int
   //TODO: create Coordinates case class from Int parameters and pass to Ship factory method
-  def putShip(start: (Int, Int), end: (Int, Int)): Canvas = {
-    val ship = Ship(startX = start._1,startY = start._2, endX = end._1, endY = end._2, canvas)
+  def putShip(startX: String, startY: String, endX: String, endY: String): Canvas = {
+    val calculateCoordinates: String => Int = (character: String) => character match {
+      case "A" | "a" => 1
+      case "B" | "b" => 2
+      case "C" | "c" => 3
+      case "D" | "d" => 4
+      case "E" | "e" => 5
+      case "F" | "f" => 6
+      case "G" | "g" => 7
+      case "H" | "h" => 8
+      case "I" | "i" => 9
+      case "J" | "j" => 10
+    }
+
+    val ship = Ship(
+      startX = calculateCoordinates(startX),
+      startY = startY.toInt,
+      endX = calculateCoordinates(endX),
+      endY = endY.toInt,
+      canvas
+    )
 
     new Canvas(ship.updateLocation())
   }

@@ -13,6 +13,7 @@ class Submarine(coordinates: Coordinates, canvas: Map[(Int, Int), Int]) extends 
 
         newCanvas = newCanvas.transform {
           case (x, _) if x == (coordinates.start.x, coordinates.start.y) => 1
+          case (_, v) if v == 1 => 1
           case _ => 0
         }
 

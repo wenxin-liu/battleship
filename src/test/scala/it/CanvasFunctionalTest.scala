@@ -10,12 +10,12 @@ class CanvasFunctionalTest extends AnyFlatSpec with Matchers with BeforeAndAfter
     val newCanvas = Canvas.apply.makeCanvas
     val newCanvasWithShips =
       newCanvas
-        .putShip((2, 2), (2, 2)) // first submarine
-        .putShip((3, 2), (3, 2)) // second submarine not placed, violates location and one ship per type rules
-        .putShip((4, 4), (5, 4)) // first destroyer
-        .putShip((2, 4), (2, 6)) // first cruiser
-        .putShip((10, 6), (10, 9)) // first battleship
-        .putShip((9, 6), (9, 9)) // second battleship not placed, violates location and one ship per type rules
+        .putShip("B", "2", "B", "2") // first submarine
+        .putShip("C", "2", "C", "2") // second submarine not placed, violates location and one ship per type rules
+        .putShip("D", "4", "E", "4") // first destroyer
+        .putShip("B", "4", "B", "6") // first cruiser
+        .putShip("J", "6", "J", "9") // first battleship
+        .putShip("I", "6", "I", "9") // second battleship not placed, violates location and one ship per type rules
 
     newCanvasWithShips.getCanvas shouldBe Map(
       (0, 0) -> 0, (1, 0) -> 0, (2, 0) -> 0, (3, 0) -> 0, (4, 0) -> 0, (5, 0) -> 0, (6, 0) -> 0, (7, 0) -> 0, (8, 0) -> 0, (9, 0) -> 0,

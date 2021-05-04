@@ -52,6 +52,7 @@ class Ship(coordinates: Coordinates, canvas: Map[(Int, Int), Int]) {
 
 object Ship {
   def apply(startX: Int, startY: Int, endX: Int, endY: Int, canvas: Map[(Int, Int), Int]): Ship = {
+    //TODO: move coordinate calculation into canvas
     val coordinates = Coordinates(Start(x = startX - 1, y = startY - 1), End(x = endX - 1, y = endY - 1))
 
     val submarine = coordinates.start.x == coordinates.end.x && coordinates.start.y == coordinates.end.y
@@ -64,7 +65,6 @@ object Ship {
     val battleship =
       coordinates.end.x - coordinates.start.x == 3 && coordinates.end.y - coordinates.start.y == 0 |
         coordinates.end.y - coordinates.start.y == 3 && coordinates.end.x - coordinates.start.x == 0
-
 
     coordinates match {
       case _ if submarine =>
