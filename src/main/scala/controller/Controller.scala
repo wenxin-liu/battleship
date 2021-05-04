@@ -32,14 +32,14 @@ object Controller {
 
     input.head match {
       case "M" | "m" =>
-        println(View.Render(Canvas.apply.makeCanvas.getCanvas)+"\n\n")
+        println(View.render(Canvas.apply.makeCanvas.getCanvas)+"\n\n")
 
         initialiseGame(Canvas.apply.makeCanvas, ships)
       case "P" | "p" if ships < 4 =>
         val Array(_, startX, startY, endX, endY) = input
         val newCanvas = canvas.putShip(startX, startY, endX, endY)
 
-        println(View.Render(newCanvas.getCanvas)+"\n\n")
+        println(View.render(newCanvas.getCanvas)+"\n\n")
 
         initialiseGame(newCanvas, ships + 1)
       case _ => initialiseGame(canvas, ships)
