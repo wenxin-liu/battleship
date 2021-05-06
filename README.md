@@ -20,7 +20,7 @@ From the project root:
 `sbt run`
 
 ### Game commands
-The canvas looks like this:  
+During the ship placement phase, the board looks like:  
 
 <pre>
     A  B  C  D  E  F  G  H  I  J  
@@ -35,7 +35,7 @@ The canvas looks like this:
  9  0  0  0  0  0  0  0  1  0  0  
 10  0  0  0  0  0  0  0  1  0  0
 </pre>
-where a 0 represents an empty cell and a 1 represents a placed ship. Each player starts with an empty canvas only of 0s. As each ship is placed, the cells where those ships occupy become 1s.
+where a `0` represents an empty cell and a `1` represents a placed ship. Each player starts with an empty canvas only of `0`s. As each ship is placed, the cells where those ships occupy become `1`s.
 
 
 * To make a new canvas:   `M`
