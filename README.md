@@ -38,13 +38,29 @@ The canvas looks like this:
 where a 0 represents an empty cell and a 1 represents a placed ship. Each player starts with an empty canvas only of 0s. As each ship is placed, the cells where those ships occupy become 1s.
 
 
-To make a new canvas:   `M`
+* To make a new canvas:   `M`
 
-To place your 1 by 1 submarine: `P X1 Y1 X2 Y2` where X1=X2 and Y1=Y2. For example: `P A 1 A 1`
+* To place your 1 by 1 submarine: `P X1 Y1 X2 Y2` where X1=X2 and Y1=Y2. For example: `P A 1 A 1`
 
-To place your 2 by 1 destroyer, 3 by 1 cruiser and 4 by 1 battleship: `P X1 Y1 X2 Y2`, for example: `P H 7 H 10` for the 4 by 1 battleship. Each ship can be horizontal or vertical, but not diagonal. 
+* To place your 2 by 1 destroyer, 3 by 1 cruiser and 4 by 1 battleship: `P X1 Y1 X2 Y2`, for example: `P H 7 H 10` for the 4 by 1 battleship. Each ship can be horizontal or vertical, but not diagonal. 
 
-Ships cannot be in adjacent cells.
+  Ships cannot be in adjacent cells.
 
-<br />
-The attack functionality is in development.
+* To attack a coordinate: `A X Y` e.g. `A B 1`
+
+Below is what the board looks like during the attack phase:
+<pre>
+    A  B  C  D  E  F  G  H  I  J
+ 1  o  -  -  -  -  -  X  X  X  -
+ 2  -  -  -  -  -  -  -  -  -  -
+ 3  -  -  -  -  -  -  -  -  -  -
+ 4  -  -  -  -  -  -  -  -  -  -
+ 5  -  -  o  -  -  -  -  -  -  -
+ 6  -  -  -  -  -  o  -  -  -  -
+ 7  -  -  -  -  -  -  -  -  o  -
+ 8  -  -  -  -  -  -  -  -  -  -
+ 9  -  -  -  -  -  -  -  -  -  -
+10  X  -  o  -  -  -  X  -  -  -
+</pre>
+
+where `X` represents a hit and `o` represents a miss.
