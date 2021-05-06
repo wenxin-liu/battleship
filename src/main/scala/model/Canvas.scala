@@ -29,21 +29,21 @@ class Canvas(canvas: Map[(Int, Int), Int]) {
 
   def getCanvas: Map[(Int, Int), Int] = canvas
 
+  protected def calculateCoordinates(character: String): Int = character match {
+    case "A" | "a" => 1
+    case "B" | "b" => 2
+    case "C" | "c" => 3
+    case "D" | "d" => 4
+    case "E" | "e" => 5
+    case "F" | "f" => 6
+    case "G" | "g" => 7
+    case "H" | "h" => 8
+    case "I" | "i" => 9
+    case "J" | "j" => 10
+  }
+
   //TODO: create Coordinates case class from Int parameters and pass to Ship factory method
   def putShip(startX: String, startY: String, endX: String, endY: String): Canvas = {
-    val calculateCoordinates: String => Int = (character: String) => character match {
-      case "A" | "a" => 1
-      case "B" | "b" => 2
-      case "C" | "c" => 3
-      case "D" | "d" => 4
-      case "E" | "e" => 5
-      case "F" | "f" => 6
-      case "G" | "g" => 7
-      case "H" | "h" => 8
-      case "I" | "i" => 9
-      case "J" | "j" => 10
-    }
-
     val ship = Ship(
       startX = calculateCoordinates(startX),
       startY = startY.toInt,

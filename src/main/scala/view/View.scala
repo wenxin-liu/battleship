@@ -31,7 +31,7 @@ object View {
             .replace("0", "-")
             .replace("1", "-")
             .replace("2", "X")
-            .replace("3", ".")
+            .replace("3", "o")
       }
 
     val middleRows: String = (for {

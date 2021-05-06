@@ -30,7 +30,7 @@ class AttackTest extends AnyFlatSpec with Matchers {
         (0, 9) -> 0, (1, 9) -> 0, (2, 9) -> 0, (3, 9) -> 0, (4, 9) -> 0, (5, 9) -> 0, (6, 9) -> 0, (7, 9) -> 0, (8, 9) -> 0, (9, 9) -> 0
       )
 
-    val attack = new Attack(0, 0, initialCanvas)
+    val attack = new Attack("A", "1", initialCanvas)
     attack.attack shouldBe result
   }
 
@@ -60,7 +60,7 @@ class AttackTest extends AnyFlatSpec with Matchers {
       (0, 9) -> 0, (1, 9) -> 0, (2, 9) -> 0, (3, 9) -> 0, (4, 9) -> 0, (5, 9) -> 0, (6, 9) -> 0, (7, 9) -> 0, (8, 9) -> 0, (9, 9) -> 0
     )
 
-    val attack = new Attack(0, 1, initialCanvas)
+    val attack = new Attack("A", "2", initialCanvas)
     attack.attack shouldBe result
   }
 }
