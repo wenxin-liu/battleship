@@ -19,7 +19,6 @@ object Controller {
 
     println(title)
 
-
     println("Player 1, please create a new board and place your ships")
     val playerOneCanvas = initialiseGame(Canvas.apply, 0)
 
@@ -61,16 +60,11 @@ object Controller {
                 playerTwoCanvas: Map[(Int, Int), Int],
                 activeAttacker: ActiveAttacker
               ): Any = {
-    //1. check both players' canvases, if there is no 1s on one player's canvas, declare a win
-    //2. if there are 1s remaining on both canvases, check whose turn it is
-    //3. allow one attack per that player's turn
-    //4. set the other player's turn to true, and the current player's turn to false
-    //5. loop
-    val playerOneNotComplete: Boolean = playerTwoCanvas.valuesIterator.exists(_ == 1)
-    val playerTwoNotComplete: Boolean = playerOneCanvas.valuesIterator.exists(_ == 1)
+    val playerOneWins: Boolean = !playerTwoCanvas.valuesIterator.exists(_ == 1)
+    val playerTwoWins: Boolean = !playerOneCanvas.valuesIterator.exists(_ == 1)
 
-    if (!playerOneNotComplete) {
-      val playerOneWins =
+    if (playerOneWins) {
+      val win =
         """
           |██████╗░██╗░░░░░░█████╗░██╗░░░██╗███████╗██████╗░  ░░███╗░░  ░██╗░░░░░░░██╗██╗███╗░░██╗░██████╗
           |██╔══██╗██║░░░░░██╔══██╗╚██╗░██╔╝██╔════╝██╔══██╗  ░████║░░  ░██║░░██╗░░██║██║████╗░██║██╔════╝
@@ -80,10 +74,10 @@ object Controller {
           |╚═╝░░░░░╚══════╝╚═╝░░╚═╝░░░╚═╝░░░╚══════╝╚═╝░░╚═╝  ╚══════╝  ░░░╚═╝░░░╚═╝░░╚═╝╚═╝░░╚══╝╚═════╝░
           |""".stripMargin
 
-      println(playerOneWins)
+      println(win)
     }
-    else if (!playerTwoNotComplete) {
-      val playerTwoWins =
+    else if (playerTwoWins) {
+      val win =
         """
           |██████╗░██╗░░░░░░█████╗░██╗░░░██╗███████╗██████╗░  ██████╗░  ░██╗░░░░░░░██╗██╗███╗░░██╗░██████╗
           |██╔══██╗██║░░░░░██╔══██╗╚██╗░██╔╝██╔════╝██╔══██╗  ╚════██╗  ░██║░░██╗░░██║██║████╗░██║██╔════╝
@@ -93,7 +87,7 @@ object Controller {
           |╚═╝░░░░░╚══════╝╚═╝░░╚═╝░░░╚═╝░░░╚══════╝╚═╝░░╚═╝  ╚══════╝  ░░░╚═╝░░░╚═╝░░╚═╝╚═╝░░╚══╝╚═════╝░
           |""".stripMargin
 
-      println(playerTwoWins)
+      println(win)
     } else if (activeAttacker.playerOne) {
       println("Player 1, please attack one coordinate on player 2's board:\n\n")
       println(View.renderAttack(playerTwoCanvas) + "\n\n")
