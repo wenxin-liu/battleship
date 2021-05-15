@@ -8,7 +8,7 @@ class CruiserTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
   before(Cruiser.set(false))
 
   it should "have a cruiser (3 cells) at 6,7 to 8,7" in {
-    val ship = Ship(startX = 6, startY = 7, endX = 8, endY = 7, canvas = newCanvas)
+    val ship = Ship(Coordinates(Start(x = 5, y = 6), End(x = 7, y = 6)), canvas = newCanvas)
 
     ship.updateLocation() shouldBe
       Map(
@@ -26,8 +26,8 @@ class CruiserTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
   }
 
   it should "only allow one cruiser (3x1) on the canvas (covers horizontal ship logic)" in {
-    val firstCruiser = Ship(startX = 1, startY = 1, endX = 3, endY = 1, canvas = newCanvas).updateLocation()
-    val result = Ship(startX = 3, startY = 3, endX = 5, endY = 3, canvas = firstCruiser).updateLocation()
+    val firstCruiser = Ship(Coordinates(Start(x = 0, y = 0), End(x = 2, y = 0)), canvas = newCanvas).updateLocation()
+    val result = Ship(Coordinates(Start(x = 2, y = 2), End(x = 4, y = 2)), canvas = firstCruiser).updateLocation()
 
     result shouldBe
       Map(
@@ -45,8 +45,9 @@ class CruiserTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
   }
 
   it should "only allow one cruiser (3x1) on the canvas (covers vertical ship logic)" in {
-    val firstCruiser = Ship(startX = 1, startY = 1, endX = 1, endY = 3, canvas = newCanvas).updateLocation()
-    val result = Ship(startX = 3, startY = 3, endX = 3, endY = 5, canvas = firstCruiser).updateLocation()
+
+    val firstCruiser = Ship(Coordinates(Start(x = 0, y = 0), End(x = 0, y = 2)), canvas = newCanvas).updateLocation()
+    val result = Ship(Coordinates(Start(x = 2, y = 2), End(x = 2, y = 4)), canvas = firstCruiser).updateLocation()
 
     result shouldBe
       Map(

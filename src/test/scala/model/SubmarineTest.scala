@@ -8,7 +8,7 @@ class SubmarineTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
   before(Submarine.set(false))
 
   it should "have a submarine (1 cell) at 2,7" in {
-    val ship = Ship(startX = 2, startY = 7, endX = 2, endY = 7, canvas = newCanvas)
+    val ship = Ship(Coordinates(Start(x = 1, y = 6), End(x = 1, y = 6)), canvas = newCanvas)
 
     ship.updateLocation() shouldBe
       Map(
@@ -26,8 +26,8 @@ class SubmarineTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
   }
 
   it should "only allow one submarine (1x1) on the canvas" in {
-    val firstSubmarine = Ship(startX = 1, startY = 1, endX = 1, endY = 1, canvas = newCanvas).updateLocation()
-    val result = Ship(startX = 3, startY = 3, endX = 3, endY = 3, canvas = firstSubmarine).updateLocation()
+    val firstSubmarine = Ship(Coordinates(Start(x = 0, y = 0), End(x = 0, y = 0)), canvas = newCanvas).updateLocation()
+    val result = Ship(Coordinates(Start(x = 2, y = 2), End(x = 2, y = 2)), canvas = firstSubmarine).updateLocation()
 
     result shouldBe
       Map(

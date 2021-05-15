@@ -1,13 +1,14 @@
 package model
 
+import Common._
+
 case class ActiveAttacker(playerOne: Boolean, playerTwo: Boolean)
 case class PlayerOne(wins: Boolean)
 case class PlayerTwo(wins: Boolean)
 
-//TODO: put the zero indexing into calculateCoordinates, don't have it in multiple places in the codebase
 class Attack(inputX: String, inputY: String, canvas: Map[(Int, Int), Int]) extends Canvas(canvas) {
-  private val x: Int = calculateCoordinates(inputX)-1
-  private val y: Int = inputY.toInt-1
+  private val x: Int = calculateCoordinates(inputX)
+  private val y: Int = calculateCoordinates(inputY)
 
   def attack: Map[(Int, Int), Int] = {
     canvas.transform {

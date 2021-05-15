@@ -1,7 +1,11 @@
 package model
 
+import Common._
+
 case class Coordinates(start: Start, end: End)
+
 case class Start(x: Int, y: Int)
+
 case class End(x: Int, y: Int)
 
 class Canvas(canvas: Map[(Int, Int), Int]) {
@@ -29,28 +33,24 @@ class Canvas(canvas: Map[(Int, Int), Int]) {
 
   def getCanvas: Map[(Int, Int), Int] = canvas
 
-  protected def calculateCoordinates(character: String): Int = character match {
-    case "A" | "a" => 1
-    case "B" | "b" => 2
-    case "C" | "c" => 3
-    case "D" | "d" => 4
-    case "E" | "e" => 5
-    case "F" | "f" => 6
-    case "G" | "g" => 7
-    case "H" | "h" => 8
-    case "I" | "i" => 9
-    case "J" | "j" => 10
-  }
+
 
   //TODO: create Coordinates case class from Int parameters and pass to Ship factory method
   def putShip(startX: String, startY: String, endX: String, endY: String): Canvas = {
     val ship = Ship(
-      startX = calculateCoordinates(startX),
-      startY = startY.toInt,
-      endX = calculateCoordinates(endX),
-      endY = endY.toInt,
+      Coordinates(
+        Start(
+          x = calculateCoordinates(startX),
+          y = calculateCoordinates(startY)
+        ),
+        End(
+          x = calculateCoordinates(endX),
+          y = calculateCoordinates(endY)
+        )
+      ),
       canvas
     )
+
 
     new Canvas(ship.updateLocation())
   }

@@ -8,7 +8,7 @@ class BattleshipTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
   before(Battleship.set(false))
 
   it should "have a battleship (4 cells) at 2,3 to 5,3" in {
-    val ship = Ship(startX = 2, startY = 3, endX = 5, endY = 3, canvas = newCanvas)
+    val ship = Ship(Coordinates(Start(x = 1, y = 2), End(x = 4, y = 2)), canvas = newCanvas)
 
     ship.updateLocation() shouldBe
       Map(
@@ -26,7 +26,7 @@ class BattleshipTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
   }
 
   it should "have a battleship (4 cells) at 10,7 to 10,10" in {
-    val ship = Ship(startX = 10, startY = 7, endX = 10, endY = 10, canvas = newCanvas)
+    val ship = Ship(Coordinates(Start(x = 9, y = 6), End(x = 9, y = 9)), canvas = newCanvas)
 
     ship.updateLocation() shouldBe
       Map(
@@ -44,8 +44,8 @@ class BattleshipTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
   }
 
   it should "only allow one battleship (4x1) on the canvas (covers horizontal ship logic)" in {
-    val firstBattleship = Ship(startX = 1, startY = 1, endX = 4, endY = 1, canvas = newCanvas).updateLocation()
-    val result = Ship(startX = 3, startY = 3, endX = 6, endY = 3, canvas = firstBattleship).updateLocation()
+    val firstBattleship = Ship(Coordinates(Start(x = 0, y = 0), End(x = 3, y = 0)), canvas = newCanvas).updateLocation()
+    val result = Ship(Coordinates(Start(x = 2, y = 2), End(x = 5, y = 2)), canvas = firstBattleship).updateLocation()
 
     result shouldBe
       Map(
@@ -63,8 +63,8 @@ class BattleshipTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
   }
 
   it should "only allow one battleship (4x1) on the canvas (covers vertical ship logic)" in {
-    val firstBattleship = Ship(startX = 1, startY = 1, endX = 1, endY = 4, canvas = newCanvas).updateLocation()
-    val result = Ship(startX = 3, startY = 3, endX = 3, endY = 6, canvas = firstBattleship).updateLocation()
+    val firstBattleship = Ship(Coordinates(Start(x = 0, y = 0), End(x = 0, y = 3)), canvas = newCanvas).updateLocation()
+    val result = Ship(Coordinates(Start(x = 2, y = 2), End(x = 2, y = 5)), canvas = firstBattleship).updateLocation()
 
     result shouldBe
       Map(

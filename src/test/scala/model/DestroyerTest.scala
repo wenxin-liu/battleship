@@ -6,7 +6,8 @@ import org.scalatest.matchers.should.Matchers
 class DestroyerTest extends AnyFlatSpec with Matchers {
   it should "have a destroyer (2 cells) at 2,3 to 2,4" in {
     Destroyer.set(false)
-    val ship = Ship(startX = 2, startY = 3, endX = 2, endY = 4, canvas = newCanvas)
+
+    val ship = Ship(Coordinates(Start(x = 1, y = 2), End(x = 1, y = 3)), canvas = newCanvas)
 
     ship.updateLocation() shouldBe
       Map(
@@ -25,8 +26,9 @@ class DestroyerTest extends AnyFlatSpec with Matchers {
 
   it should "only allow one destroyer (2x1) on the canvas (covers horizontal ship logic)" in {
     Destroyer.set(false)
-    val firstDestroyer = Ship(startX = 1, startY = 1, endX = 2, endY = 1, canvas = newCanvas).updateLocation()
-    val result = Ship(startX = 3, startY = 3, endX = 4, endY = 3, canvas = firstDestroyer).updateLocation()
+
+    val firstDestroyer = Ship(Coordinates(Start(x = 0, y = 0), End(x = 1, y = 0)), canvas = newCanvas).updateLocation()
+    val result = Ship(Coordinates(Start(x = 2, y = 2), End(x = 3, y = 2)), canvas = firstDestroyer).updateLocation()
 
     result shouldBe
       Map(
@@ -45,8 +47,9 @@ class DestroyerTest extends AnyFlatSpec with Matchers {
 
   it should "only allow one destroyer (2x1) on the canvas (covers vertical ship logic)" in {
     Destroyer.set(false)
-    val firstDestroyer = Ship(startX = 1, startY = 1, endX = 1, endY = 2, canvas = newCanvas).updateLocation()
-    val result = Ship(startX = 3, startY = 3, endX = 3, endY = 4, canvas = firstDestroyer).updateLocation()
+
+    val firstDestroyer = Ship(Coordinates(Start(x = 0, y = 0), End(x = 0, y = 1)), canvas = newCanvas).updateLocation()
+    val result = Ship(Coordinates(Start(x = 2, y = 2), End(x = 2, y = 3)), canvas = firstDestroyer).updateLocation()
 
     result shouldBe
       Map(
