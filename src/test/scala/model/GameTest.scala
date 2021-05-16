@@ -1,9 +1,12 @@
 package model
 
+import org.scalatest.BeforeAndAfter
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
-class GameTest extends AnyFlatSpec with Matchers {
+class GameTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
+  cleanStateForTestExecution
+
   "A canvas" should "be a 10 x 10 canvas" in {
     val canvas = Map(
       (0, 0) -> 0, (1, 0) -> 0, (2, 0) -> 0, (3, 0) -> 0, (4, 0) -> 0, (5, 0) -> 0, (6, 0) -> 0, (7, 0) -> 0, (8, 0) -> 0, (9, 0) -> 0,
@@ -95,5 +98,12 @@ class GameTest extends AnyFlatSpec with Matchers {
 
     val attack = Game.attack("A", "2", initialCanvas)
     attack shouldBe result
+  }
+
+  private lazy val cleanStateForTestExecution: Unit = before {
+    Submarine.set(false)
+    Destroyer.set(false)
+    Cruiser.set(false)
+    Battleship.set(false)
   }
 }
