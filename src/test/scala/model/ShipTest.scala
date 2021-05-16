@@ -8,7 +8,7 @@ class ShipTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
   cleanStateForTestExecution
 
   it should "not have ships in adjacent cells" in {
-    lazy val firstShip = Ship(Coordinates(Start(x = 9, y = 6), End(x = 9, y = 9)), canvas = newCanvas).updateLocation()
+    lazy val firstShip = Ship(Coordinates(Start(x = 9, y = 6), End(x = 9, y = 9)), canvas = Game.createNewBoard).updateLocation()
     lazy val secondShip = Ship(Coordinates(Start(x = 8, y = 7), End(x = 8, y = 9)), canvas = firstShip).updateLocation()
     lazy val result = Ship(Coordinates(Start(x = 0, y = 0), End(x = 1, y = 0)), canvas = secondShip).updateLocation()
 
@@ -28,7 +28,7 @@ class ShipTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
   }
 
   it should "only have valid ship types" in {
-    val ship = Ship(Coordinates(Start(x = 9, y = 5), End(x = 9, y = 9)), canvas = newCanvas)
+    val ship = Ship(Coordinates(Start(x = 9, y = 5), End(x = 9, y = 9)), canvas = Game.createNewBoard)
 
     ship.updateLocation() shouldBe
       Map(
@@ -45,7 +45,6 @@ class ShipTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
       )
   }
 
-  private lazy val newCanvas = Canvas.apply.makeCanvas.getCanvas
   private lazy val cleanStateForTestExecution: Unit = before {
     Submarine.set(false)
     Destroyer.set(false)

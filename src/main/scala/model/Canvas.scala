@@ -1,21 +1,19 @@
 package model
 
-import Common._
-
 case class Coordinates(start: Start, end: End)
 
 case class Start(x: Int, y: Int)
 
 case class End(x: Int, y: Int)
 
-class Canvas(canvas: Map[(Int, Int), Int]) {
-  def makeCanvas: Canvas = {
+object Canvas {
+  val newCanvas: Map[(Int, Int), Int] = {
     Submarine.set(false)
     Cruiser.set(false)
     Destroyer.set(false)
     Battleship.set(false)
 
-    val canvas = Map(
+    Map(
       (0, 0) -> 0, (1, 0) -> 0, (2, 0) -> 0, (3, 0) -> 0, (4, 0) -> 0, (5, 0) -> 0, (6, 0) -> 0, (7, 0) -> 0, (8, 0) -> 0, (9, 0) -> 0,
       (0, 1) -> 0, (1, 1) -> 0, (2, 1) -> 0, (3, 1) -> 0, (4, 1) -> 0, (5, 1) -> 0, (6, 1) -> 0, (7, 1) -> 0, (8, 1) -> 0, (9, 1) -> 0,
       (0, 2) -> 0, (1, 2) -> 0, (2, 2) -> 0, (3, 2) -> 0, (4, 2) -> 0, (5, 2) -> 0, (6, 2) -> 0, (7, 2) -> 0, (8, 2) -> 0, (9, 2) -> 0,
@@ -27,35 +25,5 @@ class Canvas(canvas: Map[(Int, Int), Int]) {
       (0, 8) -> 0, (1, 8) -> 0, (2, 8) -> 0, (3, 8) -> 0, (4, 8) -> 0, (5, 8) -> 0, (6, 8) -> 0, (7, 8) -> 0, (8, 8) -> 0, (9, 8) -> 0,
       (0, 9) -> 0, (1, 9) -> 0, (2, 9) -> 0, (3, 9) -> 0, (4, 9) -> 0, (5, 9) -> 0, (6, 9) -> 0, (7, 9) -> 0, (8, 9) -> 0, (9, 9) -> 0
     )
-
-    new Canvas(canvas)
   }
-
-  def getCanvas: Map[(Int, Int), Int] = canvas
-
-
-
-  //TODO: create Coordinates case class from Int parameters and pass to Ship factory method
-  def putShip(startX: String, startY: String, endX: String, endY: String): Canvas = {
-    val ship = Ship(
-      Coordinates(
-        Start(
-          x = calculateCoordinates(startX),
-          y = calculateCoordinates(startY)
-        ),
-        End(
-          x = calculateCoordinates(endX),
-          y = calculateCoordinates(endY)
-        )
-      ),
-      canvas
-    )
-
-
-    new Canvas(ship.updateLocation())
-  }
-}
-
-object Canvas {
-  def apply: Canvas = new Canvas(Map())
 }

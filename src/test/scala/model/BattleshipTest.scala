@@ -8,7 +8,7 @@ class BattleshipTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
   before(Battleship.set(false))
 
   it should "have a battleship (4 cells) at 2,3 to 5,3" in {
-    val ship = Ship(Coordinates(Start(x = 1, y = 2), End(x = 4, y = 2)), canvas = newCanvas)
+    val ship = Ship(Coordinates(Start(x = 1, y = 2), End(x = 4, y = 2)), canvas = Game.createNewBoard)
 
     ship.updateLocation() shouldBe
       Map(
@@ -26,7 +26,7 @@ class BattleshipTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
   }
 
   it should "have a battleship (4 cells) at 10,7 to 10,10" in {
-    val ship = Ship(Coordinates(Start(x = 9, y = 6), End(x = 9, y = 9)), canvas = newCanvas)
+    val ship = Ship(Coordinates(Start(x = 9, y = 6), End(x = 9, y = 9)), canvas = Game.createNewBoard)
 
     ship.updateLocation() shouldBe
       Map(
@@ -44,7 +44,7 @@ class BattleshipTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
   }
 
   it should "only allow one battleship (4x1) on the canvas (covers horizontal ship logic)" in {
-    val firstBattleship = Ship(Coordinates(Start(x = 0, y = 0), End(x = 3, y = 0)), canvas = newCanvas).updateLocation()
+    val firstBattleship = Ship(Coordinates(Start(x = 0, y = 0), End(x = 3, y = 0)), canvas = Game.createNewBoard).updateLocation()
     val result = Ship(Coordinates(Start(x = 2, y = 2), End(x = 5, y = 2)), canvas = firstBattleship).updateLocation()
 
     result shouldBe
@@ -63,7 +63,7 @@ class BattleshipTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
   }
 
   it should "only allow one battleship (4x1) on the canvas (covers vertical ship logic)" in {
-    val firstBattleship = Ship(Coordinates(Start(x = 0, y = 0), End(x = 0, y = 3)), canvas = newCanvas).updateLocation()
+    val firstBattleship = Ship(Coordinates(Start(x = 0, y = 0), End(x = 0, y = 3)), canvas = Game.createNewBoard).updateLocation()
     val result = Ship(Coordinates(Start(x = 2, y = 2), End(x = 2, y = 5)), canvas = firstBattleship).updateLocation()
 
     result shouldBe
@@ -80,6 +80,4 @@ class BattleshipTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
         (0, 9) -> 0, (1, 9) -> 0, (2, 9) -> 0, (3, 9) -> 0, (4, 9) -> 0, (5, 9) -> 0, (6, 9) -> 0, (7, 9) -> 0, (8, 9) -> 0, (9, 9) -> 0
       )
   }
-
-  private lazy val newCanvas = new Canvas(Map()).makeCanvas.getCanvas
 }

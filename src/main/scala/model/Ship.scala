@@ -1,5 +1,7 @@
 package model
 
+case class ShipStatus()
+
 class Ship(coordinates: Coordinates, canvas: Map[(Int, Int), Int]) {
   protected val exceedsMaxNumber = false
 

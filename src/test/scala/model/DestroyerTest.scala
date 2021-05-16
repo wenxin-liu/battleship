@@ -7,7 +7,7 @@ class DestroyerTest extends AnyFlatSpec with Matchers {
   it should "have a destroyer (2 cells) at 2,3 to 2,4" in {
     Destroyer.set(false)
 
-    val ship = Ship(Coordinates(Start(x = 1, y = 2), End(x = 1, y = 3)), canvas = newCanvas)
+    val ship = Ship(Coordinates(Start(x = 1, y = 2), End(x = 1, y = 3)), canvas = Game.createNewBoard)
 
     ship.updateLocation() shouldBe
       Map(
@@ -27,7 +27,7 @@ class DestroyerTest extends AnyFlatSpec with Matchers {
   it should "only allow one destroyer (2x1) on the canvas (covers horizontal ship logic)" in {
     Destroyer.set(false)
 
-    val firstDestroyer = Ship(Coordinates(Start(x = 0, y = 0), End(x = 1, y = 0)), canvas = newCanvas).updateLocation()
+    val firstDestroyer = Ship(Coordinates(Start(x = 0, y = 0), End(x = 1, y = 0)), canvas = Game.createNewBoard).updateLocation()
     val result = Ship(Coordinates(Start(x = 2, y = 2), End(x = 3, y = 2)), canvas = firstDestroyer).updateLocation()
 
     result shouldBe
@@ -48,7 +48,7 @@ class DestroyerTest extends AnyFlatSpec with Matchers {
   it should "only allow one destroyer (2x1) on the canvas (covers vertical ship logic)" in {
     Destroyer.set(false)
 
-    val firstDestroyer = Ship(Coordinates(Start(x = 0, y = 0), End(x = 0, y = 1)), canvas = newCanvas).updateLocation()
+    val firstDestroyer = Ship(Coordinates(Start(x = 0, y = 0), End(x = 0, y = 1)), canvas = Game.createNewBoard).updateLocation()
     val result = Ship(Coordinates(Start(x = 2, y = 2), End(x = 2, y = 3)), canvas = firstDestroyer).updateLocation()
 
     result shouldBe
@@ -65,6 +65,4 @@ class DestroyerTest extends AnyFlatSpec with Matchers {
         (0, 9) -> 0, (1, 9) -> 0, (2, 9) -> 0, (3, 9) -> 0, (4, 9) -> 0, (5, 9) -> 0, (6, 9) -> 0, (7, 9) -> 0, (8, 9) -> 0, (9, 9) -> 0
       )
   }
-
-  private lazy val newCanvas = new Canvas(Map()).makeCanvas.getCanvas
 }
