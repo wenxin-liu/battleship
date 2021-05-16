@@ -10,25 +10,25 @@ class GameFunctionalTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
     val newCanvas = Game.createNewBoard
 
     // first submarine
-    val firstShip = Game.putShip("B", "2", "B", "2", newCanvas)
+    val firstShip = Game.placeShip("B", "2", "B", "2", newCanvas)
 
     // second submarine not placed, violates location and one ship per type rules
-    val secondShip = Game.putShip("C", "2", "C", "2", firstShip)
+    val secondShip = Game.placeShip("C", "2", "C", "2", firstShip)
 
     // first destroyer
-    val thirdShip = Game.putShip("D", "4", "E", "4", secondShip)
+    val thirdShip = Game.placeShip("D", "4", "E", "4", secondShip)
 
     // first cruiser
-    val fourthShip = Game.putShip("B", "4", "B", "6", thirdShip)
+    val fourthShip = Game.placeShip("B", "4", "B", "6", thirdShip)
 
     // first battleship
-    val fifthShip = Game.putShip("J", "6", "J", "9", fourthShip)
+    val fifthShip = Game.placeShip("J", "6", "J", "9", fourthShip)
 
     // second battleship not placed, violates location and one ship per type rules
-    val sixthShip = Game.putShip("I", "6", "I", "9", fifthShip)
+    val sixthShip = Game.placeShip("I", "6", "I", "9", fifthShip)
 
-    val attackOne = Game.Attack("A", "1", sixthShip)
-    val attackTwo = Game.Attack("B", "2", attackOne)
+    val attackOne = Game.attack("A", "1", sixthShip)
+    val attackTwo = Game.attack("B", "2", attackOne)
 
     attackTwo shouldBe Map(
       (0, 0) -> 3, (1, 0) -> 0, (2, 0) -> 0, (3, 0) -> 0, (4, 0) -> 0, (5, 0) -> 0, (6, 0) -> 0, (7, 0) -> 0, (8, 0) -> 0, (9, 0) -> 0,

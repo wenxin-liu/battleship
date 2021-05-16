@@ -18,7 +18,7 @@ object Game {
     newCanvas
   }
 
-  def putShip(
+  def placeShip(
                startX: String,
                startY: String,
                endX: String,
@@ -42,7 +42,7 @@ object Game {
     ship.updateLocation()
   }
 
-  def Attack(inputX: String, inputY: String, canvas: Map[(Int, Int), Int]): Map[(Int, Int), Int] = {
+  def attack(inputX: String, inputY: String, canvas: Map[(Int, Int), Int]): Map[(Int, Int), Int] = {
     val x: Int = calculateCoordinates(inputX)
     val y: Int = calculateCoordinates(inputY)
 
