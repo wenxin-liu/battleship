@@ -8,7 +8,7 @@ class BattleshipTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
   it should "have a battleship (4 cells) at 2,3 to 5,3" in {
     val ship = Ship(Coordinates(Start(x = 1, y = 2), End(x = 4, y = 2)), gameState = Game.createNewBoard)
 
-    ship.updateLocation() shouldBe GameState(
+    ship.updateLocation() shouldBe PlacementPhase(
       Map(
         (0, 0) -> 0, (1, 0) -> 0, (2, 0) -> 0, (3, 0) -> 0, (4, 0) -> 0, (5, 0) -> 0, (6, 0) -> 0, (7, 0) -> 0, (8, 0) -> 0, (9, 0) -> 0,
         (0, 1) -> 0, (1, 1) -> 0, (2, 1) -> 0, (3, 1) -> 0, (4, 1) -> 0, (5, 1) -> 0, (6, 1) -> 0, (7, 1) -> 0, (8, 1) -> 0, (9, 1) -> 0,
@@ -27,7 +27,7 @@ class BattleshipTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
   it should "have a battleship (4 cells) at 10,7 to 10,10" in {
     val ship = Ship(Coordinates(Start(x = 9, y = 6), End(x = 9, y = 9)), gameState = Game.createNewBoard)
 
-    ship.updateLocation() shouldBe GameState(
+    ship.updateLocation() shouldBe PlacementPhase(
       Map(
         (0, 0) -> 0, (1, 0) -> 0, (2, 0) -> 0, (3, 0) -> 0, (4, 0) -> 0, (5, 0) -> 0, (6, 0) -> 0, (7, 0) -> 0, (8, 0) -> 0, (9, 0) -> 0,
         (0, 1) -> 0, (1, 1) -> 0, (2, 1) -> 0, (3, 1) -> 0, (4, 1) -> 0, (5, 1) -> 0, (6, 1) -> 0, (7, 1) -> 0, (8, 1) -> 0, (9, 1) -> 0,
@@ -48,7 +48,7 @@ class BattleshipTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
     val firstBattleship = Ship(Coordinates(Start(x = 0, y = 0), End(x = 3, y = 0)), gameState = Game.createNewBoard).updateLocation()
     val result = Ship(Coordinates(Start(x = 2, y = 2), End(x = 5, y = 2)), gameState = firstBattleship).updateLocation()
 
-    result shouldBe GameState(
+    result shouldBe PlacementPhase(
       Map(
         (0, 0) -> 1, (1, 0) -> 1, (2, 0) -> 1, (3, 0) -> 1, (4, 0) -> 0, (5, 0) -> 0, (6, 0) -> 0, (7, 0) -> 0, (8, 0) -> 0, (9, 0) -> 0,
         (0, 1) -> 0, (1, 1) -> 0, (2, 1) -> 0, (3, 1) -> 0, (4, 1) -> 0, (5, 1) -> 0, (6, 1) -> 0, (7, 1) -> 0, (8, 1) -> 0, (9, 1) -> 0,
@@ -69,7 +69,7 @@ class BattleshipTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
     val firstBattleship = Ship(Coordinates(Start(x = 0, y = 0), End(x = 0, y = 3)), gameState = Game.createNewBoard).updateLocation()
     val result = Ship(Coordinates(Start(x = 2, y = 2), End(x = 2, y = 5)), gameState = firstBattleship).updateLocation()
 
-    result shouldBe GameState(
+    result shouldBe PlacementPhase(
       Map(
         (0, 0) -> 1, (1, 0) -> 0, (2, 0) -> 0, (3, 0) -> 0, (4, 0) -> 0, (5, 0) -> 0, (6, 0) -> 0, (7, 0) -> 0, (8, 0) -> 0, (9, 0) -> 0,
         (0, 1) -> 1, (1, 1) -> 0, (2, 1) -> 0, (3, 1) -> 0, (4, 1) -> 0, (5, 1) -> 0, (6, 1) -> 0, (7, 1) -> 0, (8, 1) -> 0, (9, 1) -> 0,

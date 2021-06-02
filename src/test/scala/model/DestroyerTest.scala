@@ -7,7 +7,7 @@ class DestroyerTest extends AnyFlatSpec with Matchers {
   it should "have a destroyer (2 cells) at 2,3 to 2,4" in {
     val ship = Ship(Coordinates(Start(x = 1, y = 2), End(x = 1, y = 3)), gameState = Game.createNewBoard)
 
-    ship.updateLocation() shouldBe GameState(
+    ship.updateLocation() shouldBe PlacementPhase(
       Map(
         (0, 0) -> 0, (1, 0) -> 0, (2, 0) -> 0, (3, 0) -> 0, (4, 0) -> 0, (5, 0) -> 0, (6, 0) -> 0, (7, 0) -> 0, (8, 0) -> 0, (9, 0) -> 0,
         (0, 1) -> 0, (1, 1) -> 0, (2, 1) -> 0, (3, 1) -> 0, (4, 1) -> 0, (5, 1) -> 0, (6, 1) -> 0, (7, 1) -> 0, (8, 1) -> 0, (9, 1) -> 0,
@@ -28,7 +28,7 @@ class DestroyerTest extends AnyFlatSpec with Matchers {
     val firstDestroyer = Ship(Coordinates(Start(x = 0, y = 0), End(x = 1, y = 0)), gameState = Game.createNewBoard).updateLocation()
     val result = Ship(Coordinates(Start(x = 2, y = 2), End(x = 3, y = 2)), gameState = firstDestroyer).updateLocation()
 
-    result shouldBe GameState(
+    result shouldBe PlacementPhase(
       Map(
         (0, 0) -> 1, (1, 0) -> 1, (2, 0) -> 0, (3, 0) -> 0, (4, 0) -> 0, (5, 0) -> 0, (6, 0) -> 0, (7, 0) -> 0, (8, 0) -> 0, (9, 0) -> 0,
         (0, 1) -> 0, (1, 1) -> 0, (2, 1) -> 0, (3, 1) -> 0, (4, 1) -> 0, (5, 1) -> 0, (6, 1) -> 0, (7, 1) -> 0, (8, 1) -> 0, (9, 1) -> 0,
@@ -49,7 +49,7 @@ class DestroyerTest extends AnyFlatSpec with Matchers {
     val firstDestroyer = Ship(Coordinates(Start(x = 0, y = 0), End(x = 0, y = 1)), gameState = Game.createNewBoard).updateLocation()
     val result = Ship(Coordinates(Start(x = 2, y = 2), End(x = 2, y = 3)), gameState = firstDestroyer).updateLocation()
 
-    result shouldBe GameState(
+    result shouldBe PlacementPhase(
       Map(
         (0, 0) -> 1, (1, 0) -> 0, (2, 0) -> 0, (3, 0) -> 0, (4, 0) -> 0, (5, 0) -> 0, (6, 0) -> 0, (7, 0) -> 0, (8, 0) -> 0, (9, 0) -> 0,
         (0, 1) -> 1, (1, 1) -> 0, (2, 1) -> 0, (3, 1) -> 0, (4, 1) -> 0, (5, 1) -> 0, (6, 1) -> 0, (7, 1) -> 0, (8, 1) -> 0, (9, 1) -> 0,

@@ -3,25 +3,32 @@ package model
 import model.Canvas._
 import model.Common._
 
-case class GameState(
-                      canvas: Map[(Int, Int), Int] = Map(),
-                      shipsPlaced: ShipsPlaced = ShipsPlaced()
-                    )
+case class ActivePlayer(
+                         playerOne: Boolean = false,
+                         playerTwo: Boolean = false
+                       )
 
-case class ActivePlayer(playerOne: Boolean, playerTwo: Boolean)
-case class PlayerOne(wins: Boolean)
-case class PlayerTwo(wins: Boolean)
+case class AttackPhase(
+                        playerOneCanvas: Map[(Int, Int), Int],
+                        playerTwoCanvas: Map[(Int, Int), Int],
+                        activePlayer: ActivePlayer
+                      )
+
+case class PlacementPhase(
+                           canvas: Map[(Int, Int), Int] = Map(),
+                           shipsPlaced: ShipsPlaced = ShipsPlaced()
+                         )
 
 object Game {
-  def createNewBoard: GameState = GameState(canvas = newCanvas)
+  def createNewBoard: PlacementPhase = PlacementPhase(canvas = newCanvas)
 
   def placeShip(
-               startX: String,
-               startY: String,
-               endX: String,
-               endY: String,
-               gameState: GameState
-             ): GameState = {
+                 startX: String,
+                 startY: String,
+                 endX: String,
+                 endY: String,
+                 gameState: PlacementPhase
+               ): PlacementPhase = {
     val ship = Ship(
       Coordinates(
         Start(
@@ -57,14 +64,25 @@ object Game {
     )
   }
 
-  def attack(inputX: String, inputY: String, canvas: Map[(Int, Int), Int]): Map[(Int, Int), Int] = {
-    val x: Int = calculateCoordinates(inputX)
-    val y: Int = calculateCoordinates(inputY)
+  def attack(coordinateX: String, coordinateY: String, gameState: AttackPhase): AttackPhase = {
+    val x: Int = calculateCoordinates(coordinateX)
+    val y: Int = calculateCoordinates(coordinateY)
 
-    canvas.transform {
-      case (k, v) if k == (x, y) && v == 1 => 2
-      case (k, v) if k == (x, y) && v == 0 => 3
-      case (_, v) => v
+    val updateCanvas = (canvas: Map[(Int, Int), Int]) =>
+      canvas.transform {
+        case (k, v) if k == (x, y) && v == 1 => 2
+        case (k, v) if k == (x, y) && v == 0 => 3
+        case (_, v) => v
+      }
+
+    gameState match {
+      case AttackPhase(playerOneCanvas, playerTwoCanvas, ActivePlayer(playerOne, playerTwo))
+        if playerOne && !playerTwo =>
+        AttackPhase(playerOneCanvas, updateCanvas(playerTwoCanvas), ActivePlayer(playerTwo = true))
+      case AttackPhase(playerOneCanvas, playerTwoCanvas, ActivePlayer(playerOne, playerTwo))
+        if !playerOne && playerTwo =>
+        AttackPhase(updateCanvas(playerOneCanvas), playerTwoCanvas, ActivePlayer(playerOne = true))
+      case _ => gameState
     }
   }
 }

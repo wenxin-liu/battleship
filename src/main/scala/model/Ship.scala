@@ -7,7 +7,7 @@ case class ShipsPlaced(
                        battleship: Boolean = false
                      )
 
-class Ship(coordinates: Coordinates, gameState: GameState) {
+class Ship(coordinates: Coordinates, gameState: PlacementPhase) {
   protected val exceedsMaxNumber = false
 
   protected val validLocation: Boolean = {
@@ -54,11 +54,11 @@ class Ship(coordinates: Coordinates, gameState: GameState) {
     newCanvas
   }
 
-  def updateLocation(): GameState = gameState
+  def updateLocation(): PlacementPhase = gameState
 }
 
 object Ship {
-  def apply(coordinates: Coordinates, gameState: GameState): Ship = {
+  def apply(coordinates: Coordinates, gameState: PlacementPhase): Ship = {
     val submarine = coordinates.start.x == coordinates.end.x && coordinates.start.y == coordinates.end.y
     val destroyer =
     coordinates.end.x - coordinates.start.x == 1 && coordinates.end.y - coordinates.start.y == 0 |

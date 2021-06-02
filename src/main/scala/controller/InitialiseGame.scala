@@ -1,13 +1,13 @@
 package controller
 
-import model.{Game, GameState}
+import model.{Game, PlacementPhase}
 import view.View
 
 import scala.annotation.tailrec
 import scala.io.StdIn.readLine
 
 object InitialiseGame {
-  @tailrec def initialiseGame(currentGameState: GameState): GameState = {
+  @tailrec def initialiseGame(currentGameState: PlacementPhase): PlacementPhase = {
     val allShipsPlaced =
       currentGameState.shipsPlaced.submarine &&
         currentGameState.shipsPlaced.destroyer &&

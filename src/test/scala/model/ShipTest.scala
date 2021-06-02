@@ -10,7 +10,7 @@ class ShipTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
     lazy val secondShip = Ship(Coordinates(Start(x = 8, y = 7), End(x = 8, y = 9)), gameState = firstShip).updateLocation()
     lazy val result = Ship(Coordinates(Start(x = 0, y = 0), End(x = 1, y = 0)), gameState = secondShip).updateLocation()
 
-    result shouldBe GameState(
+    result shouldBe PlacementPhase(
       Map(
         (0, 0) -> 1, (1, 0) -> 1, (2, 0) -> 0, (3, 0) -> 0, (4, 0) -> 0, (5, 0) -> 0, (6, 0) -> 0, (7, 0) -> 0, (8, 0) -> 0, (9, 0) -> 0,
         (0, 1) -> 0, (1, 1) -> 0, (2, 1) -> 0, (3, 1) -> 0, (4, 1) -> 0, (5, 1) -> 0, (6, 1) -> 0, (7, 1) -> 0, (8, 1) -> 0, (9, 1) -> 0,
@@ -30,7 +30,7 @@ class ShipTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
   it should "only have valid ship types" in {
     val ship = Ship(Coordinates(Start(x = 9, y = 5), End(x = 9, y = 9)), gameState = Game.createNewBoard)
 
-    ship.updateLocation() shouldBe GameState(
+    ship.updateLocation() shouldBe PlacementPhase(
       Map(
         (0, 0) -> 0, (1, 0) -> 0, (2, 0) -> 0, (3, 0) -> 0, (4, 0) -> 0, (5, 0) -> 0, (6, 0) -> 0, (7, 0) -> 0, (8, 0) -> 0, (9, 0) -> 0,
         (0, 1) -> 0, (1, 1) -> 0, (2, 1) -> 0, (3, 1) -> 0, (4, 1) -> 0, (5, 1) -> 0, (6, 1) -> 0, (7, 1) -> 0, (8, 1) -> 0, (9, 1) -> 0,

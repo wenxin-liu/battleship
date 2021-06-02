@@ -8,7 +8,7 @@ class SubmarineTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
   it should "have a submarine (1 cell) at 2,7" in {
     val ship = Ship(Coordinates(Start(x = 1, y = 6), End(x = 1, y = 6)), gameState = Game.createNewBoard)
 
-    ship.updateLocation() shouldBe GameState(
+    ship.updateLocation() shouldBe PlacementPhase(
       Map(
         (0, 0) -> 0, (1, 0) -> 0, (2, 0) -> 0, (3, 0) -> 0, (4, 0) -> 0, (5, 0) -> 0, (6, 0) -> 0, (7, 0) -> 0, (8, 0) -> 0, (9, 0) -> 0,
         (0, 1) -> 0, (1, 1) -> 0, (2, 1) -> 0, (3, 1) -> 0, (4, 1) -> 0, (5, 1) -> 0, (6, 1) -> 0, (7, 1) -> 0, (8, 1) -> 0, (9, 1) -> 0,
@@ -29,7 +29,7 @@ class SubmarineTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
     val firstSubmarine = Ship(Coordinates(Start(x = 0, y = 0), End(x = 0, y = 0)), gameState = Game.createNewBoard).updateLocation()
     val result = Ship(Coordinates(Start(x = 2, y = 2), End(x = 2, y = 2)), gameState = firstSubmarine).updateLocation()
 
-    result shouldBe GameState(canvas =
+    result shouldBe PlacementPhase(canvas =
       Map(
         (0, 0) -> 1, (1, 0) -> 0, (2, 0) -> 0, (3, 0) -> 0, (4, 0) -> 0, (5, 0) -> 0, (6, 0) -> 0, (7, 0) -> 0, (8, 0) -> 0, (9, 0) -> 0,
         (0, 1) -> 0, (1, 1) -> 0, (2, 1) -> 0, (3, 1) -> 0, (4, 1) -> 0, (5, 1) -> 0, (6, 1) -> 0, (7, 1) -> 0, (8, 1) -> 0, (9, 1) -> 0,

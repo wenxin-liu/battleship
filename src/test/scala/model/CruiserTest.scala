@@ -8,7 +8,7 @@ class CruiserTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
   it should "have a cruiser (3 cells) at 6,7 to 8,7" in {
     val ship = Ship(Coordinates(Start(x = 5, y = 6), End(x = 7, y = 6)), gameState = Game.createNewBoard)
 
-    ship.updateLocation() shouldBe GameState(
+    ship.updateLocation() shouldBe PlacementPhase(
       Map(
         (0, 0) -> 0, (1, 0) -> 0, (2, 0) -> 0, (3, 0) -> 0, (4, 0) -> 0, (5, 0) -> 0, (6, 0) -> 0, (7, 0) -> 0, (8, 0) -> 0, (9, 0) -> 0,
         (0, 1) -> 0, (1, 1) -> 0, (2, 1) -> 0, (3, 1) -> 0, (4, 1) -> 0, (5, 1) -> 0, (6, 1) -> 0, (7, 1) -> 0, (8, 1) -> 0, (9, 1) -> 0,
@@ -29,7 +29,7 @@ class CruiserTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
     val firstCruiser = Ship(Coordinates(Start(x = 0, y = 0), End(x = 2, y = 0)), gameState = Game.createNewBoard).updateLocation()
     val result = Ship(Coordinates(Start(x = 2, y = 2), End(x = 4, y = 2)), gameState = firstCruiser).updateLocation()
 
-    result shouldBe GameState(
+    result shouldBe PlacementPhase(
       Map(
         (0, 0) -> 1, (1, 0) -> 1, (2, 0) -> 1, (3, 0) -> 0, (4, 0) -> 0, (5, 0) -> 0, (6, 0) -> 0, (7, 0) -> 0, (8, 0) -> 0, (9, 0) -> 0,
         (0, 1) -> 0, (1, 1) -> 0, (2, 1) -> 0, (3, 1) -> 0, (4, 1) -> 0, (5, 1) -> 0, (6, 1) -> 0, (7, 1) -> 0, (8, 1) -> 0, (9, 1) -> 0,
@@ -51,7 +51,7 @@ class CruiserTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
     val firstCruiser = Ship(Coordinates(Start(x = 0, y = 0), End(x = 0, y = 2)), gameState = Game.createNewBoard).updateLocation()
     val result = Ship(Coordinates(Start(x = 2, y = 2), End(x = 2, y = 4)), gameState = firstCruiser).updateLocation()
 
-    result shouldBe GameState(
+    result shouldBe PlacementPhase(
       Map(
         (0, 0) -> 1, (1, 0) -> 0, (2, 0) -> 0, (3, 0) -> 0, (4, 0) -> 0, (5, 0) -> 0, (6, 0) -> 0, (7, 0) -> 0, (8, 0) -> 0, (9, 0) -> 0,
         (0, 1) -> 1, (1, 1) -> 0, (2, 1) -> 0, (3, 1) -> 0, (4, 1) -> 0, (5, 1) -> 0, (6, 1) -> 0, (7, 1) -> 0, (8, 1) -> 0, (9, 1) -> 0,
