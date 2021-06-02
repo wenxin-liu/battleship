@@ -8,12 +8,12 @@ import scala.io.StdIn.readLine
 
 object PlayGame {
   @tailrec def playGame(
-                         playerOneCanvas: Map[(Int, Int), Int],
-                         playerTwoCanvas: Map[(Int, Int), Int],
-                         activePlayer: ActivePlayer
+                         playerOneOriginalCanvas: Map[(Int, Int), Int],
+                         playerTwoOriginalCanvas: Map[(Int, Int), Int],
+                         activePlayerState: ActivePlayer
                        ): Any = {
-    val playerOneWins: Boolean = !playerTwoCanvas.valuesIterator.exists(_ == 1)
-    val playerTwoWins: Boolean = !playerOneCanvas.valuesIterator.exists(_ == 1)
+    val playerOneWins: Boolean = !playerTwoOriginalCanvas.valuesIterator.exists(_ == 1)
+    val playerTwoWins: Boolean = !playerOneOriginalCanvas.valuesIterator.exists(_ == 1)
 
     val attack = (x: String, y: String, canvas: Map[(Int, Int), Int]) => {
       val newCanvas = Game.attack(x, y, canvas)
@@ -22,45 +22,56 @@ object PlayGame {
       Thread.sleep(5000)
       println("\n\n")
 
-      (newCanvas, ActivePlayer(playerOne = !activePlayer.playerOne, playerTwo = !activePlayer.playerTwo))
+      //If player one was the active player, so activePlayerState.playerOne = true
+      //make activePlayerState.playerOne = false
+      //If player two was not the active player, so activePlayerState.playerTwo = false
+      //now make activePlayerState.playerTwo = true, changing player two to be the active player
+
+      (newCanvas, ActivePlayer(playerOne = !activePlayerState.playerOne, playerTwo = !activePlayerState.playerTwo))
     }
 
-    if (playerOneWins) println(playerOneWin)
-    else if (playerTwoWins) println(playerTwoWin)
-    else if (activePlayer.playerOne) {
+    if (playerOneWins) println(playerOneWinMessage)
+    else if (playerTwoWins) println(playerTwoWinMessage)
+    else if (activePlayerState.playerOne) {
       println("Player 1, please attack one coordinate on player 2's board:\n\n")
-      println(View.renderAttack(playerTwoCanvas) + "\n\n")
+      println(View.renderAttack(playerTwoOriginalCanvas) + "\n\n")
 
       val input = readLine().split(" ")
 
       input.head match {
         case "A" | "a" =>
-          val Array(_, x, y) = input
-          val result = attack(x, y, playerTwoCanvas)
+          val Array(_, xCoordinate, yCoordinate) = input
+          val result = attack(xCoordinate, yCoordinate, playerTwoOriginalCanvas)
 
-          playGame(playerOneCanvas, result._1, result._2)
+          val playerTwoNewCanvas = result._1
+          val activePlayerNewState = result._2
 
-        case _ => playGame(playerOneCanvas, playerTwoCanvas, activePlayer)
+          playGame(playerOneOriginalCanvas, playerTwoNewCanvas, activePlayerNewState)
+
+        case _ => playGame(playerOneOriginalCanvas, playerTwoOriginalCanvas, activePlayerState)
       }
-    } else if (activePlayer.playerTwo) {
+    } else if (activePlayerState.playerTwo) {
       println("Player 2, please attack one coordinate on player 1's board: ")
-      println(View.renderAttack(playerOneCanvas) + "\n\n")
+      println(View.renderAttack(playerOneOriginalCanvas) + "\n\n")
 
       val input = readLine().split(" ")
 
       input.head match {
         case "A" | "a" =>
-          val Array(_, x, y) = input
-          val result = attack(x, y, playerOneCanvas)
+          val Array(_, xCoordinate, yCoordinate) = input
+          val result = attack(xCoordinate, yCoordinate, playerOneOriginalCanvas)
 
-          playGame(result._1, playerTwoCanvas, result._2)
+          val playerOneNewCanvas = result._1
+          val activePlayerNewState = result._2
 
-        case _ => playGame(playerOneCanvas, playerTwoCanvas, activePlayer)
+          playGame(playerOneNewCanvas, playerTwoOriginalCanvas, activePlayerNewState)
+
+        case _ => playGame(playerOneOriginalCanvas, playerTwoOriginalCanvas, activePlayerState)
       }
     } else println("error")
   }
 
-  val playerOneWin: String =
+  val playerOneWinMessage: String =
     """
       |██████╗░██╗░░░░░░█████╗░██╗░░░██╗███████╗██████╗░  ░░███╗░░  ░██╗░░░░░░░██╗██╗███╗░░██╗░██████╗
       |██╔══██╗██║░░░░░██╔══██╗╚██╗░██╔╝██╔════╝██╔══██╗  ░████║░░  ░██║░░██╗░░██║██║████╗░██║██╔════╝
@@ -70,7 +81,7 @@ object PlayGame {
       |╚═╝░░░░░╚══════╝╚═╝░░╚═╝░░░╚═╝░░░╚══════╝╚═╝░░╚═╝  ╚══════╝  ░░░╚═╝░░░╚═╝░░╚═╝╚═╝░░╚══╝╚═════╝░
       |""".stripMargin
 
-  val playerTwoWin: String =
+  val playerTwoWinMessage: String =
     """
       |██████╗░██╗░░░░░░█████╗░██╗░░░██╗███████╗██████╗░  ██████╗░  ░██╗░░░░░░░██╗██╗███╗░░██╗░██████╗
       |██╔══██╗██║░░░░░██╔══██╗╚██╗░██╔╝██╔════╝██╔══██╗  ╚════██╗  ░██║░░██╗░░██║██║████╗░██║██╔════╝

@@ -6,8 +6,6 @@ import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
 class GameFunctionalTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
-  cleanStateForTestExecution
-
   "A Game" should "be able to create a new canvas, place 4 types of ships, only one per type, then attack" in {
     val newCanvas = Game.createNewBoard
 
@@ -29,7 +27,7 @@ class GameFunctionalTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
     // second battleship not placed, violates location and one ship per type rules
     val sixthShip = Game.placeShip("I", "6", "I", "9", fifthShip)
 
-    val attackOne = Game.attack("A", "1", sixthShip)
+    val attackOne = Game.attack("A", "1", sixthShip.canvas)
     val attackTwo = Game.attack("B", "2", attackOne)
 
     attackTwo shouldBe Map(
@@ -44,12 +42,5 @@ class GameFunctionalTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
       (0, 8) -> 0, (1, 8) -> 0, (2, 8) -> 0, (3, 8) -> 0, (4, 8) -> 0, (5, 8) -> 0, (6, 8) -> 0, (7, 8) -> 0, (8, 8) -> 0, (9, 8) -> 1,
       (0, 9) -> 0, (1, 9) -> 0, (2, 9) -> 0, (3, 9) -> 0, (4, 9) -> 0, (5, 9) -> 0, (6, 9) -> 0, (7, 9) -> 0, (8, 9) -> 0, (9, 9) -> 0
     )
-  }
-
-  private lazy val cleanStateForTestExecution: Unit = before {
-    Submarine.set(false)
-    Destroyer.set(false)
-    Cruiser.set(false)
-    Battleship.set(false)
   }
 }

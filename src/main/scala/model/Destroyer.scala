@@ -1,32 +1,34 @@
 package model
 
-class Destroyer(coordinates: Coordinates, canvas: Map[(Int, Int), Int]) extends Ship(coordinates, canvas) {
+class Destroyer(coordinates: Coordinates, gameState: GameState) extends Ship(coordinates, gameState) {
   private val horizontalDestroyer =
     coordinates.end.x - coordinates.start.x == 1 && coordinates.end.y - coordinates.start.y == 0
   private val verticalDestroyer =
     coordinates.end.y - coordinates.start.y == 1 && coordinates.end.x - coordinates.start.x == 0
-  protected override val exceedsMaxNumber: Boolean = Destroyer.get
+  protected override val exceedsMaxNumber: Boolean = gameState.shipsPlaced.destroyer
 
-  override def updateLocation(): Map[(Int, Int), Int] = {
+  override def updateLocation(): GameState = {
     coordinates match {
-      case _ if !validLocation | exceedsMaxNumber => canvas
+      case _ if !validLocation | exceedsMaxNumber => gameState
       case _ if horizontalDestroyer =>
-        val newCanvas = updateHorizontalShip(canvas)
-        Destroyer.set(true)
-        newCanvas
+        val newCanvas = updateHorizontalShip(gameState.canvas)
+        val destroyerPlaced = gameState.shipsPlaced.copy(destroyer = true)
+
+        gameState.copy(canvas = newCanvas, shipsPlaced = destroyerPlaced)
       case _ if verticalDestroyer =>
-        val newCanvas = updateVerticalShip(canvas)
-        Destroyer.set(true)
-        newCanvas
-      case _ => canvas
+        val newCanvas = updateVerticalShip(gameState.canvas)
+        val destroyerPlaced = gameState.shipsPlaced.copy(destroyer = true)
+
+        gameState.copy(canvas = newCanvas, shipsPlaced = destroyerPlaced)
+      case _ => gameState
     }
   }
 }
 
-object Destroyer {
-  private var isPlaced = false
-
-  def set(value: Boolean): Unit = isPlaced = value
-
-  def get: Boolean = isPlaced
-}
+//object Destroyer {
+//  private var isPlaced = false
+//
+//  def set(value: Boolean): Unit = isPlaced = value
+//
+//  def get: Boolean = isPlaced
+//}

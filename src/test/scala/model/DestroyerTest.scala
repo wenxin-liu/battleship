@@ -5,11 +5,9 @@ import org.scalatest.matchers.should.Matchers
 
 class DestroyerTest extends AnyFlatSpec with Matchers {
   it should "have a destroyer (2 cells) at 2,3 to 2,4" in {
-    Destroyer.set(false)
+    val ship = Ship(Coordinates(Start(x = 1, y = 2), End(x = 1, y = 3)), gameState = Game.createNewBoard)
 
-    val ship = Ship(Coordinates(Start(x = 1, y = 2), End(x = 1, y = 3)), canvas = Game.createNewBoard)
-
-    ship.updateLocation() shouldBe
+    ship.updateLocation() shouldBe GameState(
       Map(
         (0, 0) -> 0, (1, 0) -> 0, (2, 0) -> 0, (3, 0) -> 0, (4, 0) -> 0, (5, 0) -> 0, (6, 0) -> 0, (7, 0) -> 0, (8, 0) -> 0, (9, 0) -> 0,
         (0, 1) -> 0, (1, 1) -> 0, (2, 1) -> 0, (3, 1) -> 0, (4, 1) -> 0, (5, 1) -> 0, (6, 1) -> 0, (7, 1) -> 0, (8, 1) -> 0, (9, 1) -> 0,
@@ -21,16 +19,16 @@ class DestroyerTest extends AnyFlatSpec with Matchers {
         (0, 7) -> 0, (1, 7) -> 0, (2, 7) -> 0, (3, 7) -> 0, (4, 7) -> 0, (5, 7) -> 0, (6, 7) -> 0, (7, 7) -> 0, (8, 7) -> 0, (9, 7) -> 0,
         (0, 8) -> 0, (1, 8) -> 0, (2, 8) -> 0, (3, 8) -> 0, (4, 8) -> 0, (5, 8) -> 0, (6, 8) -> 0, (7, 8) -> 0, (8, 8) -> 0, (9, 8) -> 0,
         (0, 9) -> 0, (1, 9) -> 0, (2, 9) -> 0, (3, 9) -> 0, (4, 9) -> 0, (5, 9) -> 0, (6, 9) -> 0, (7, 9) -> 0, (8, 9) -> 0, (9, 9) -> 0
-      )
+      ),
+      ShipsPlaced(destroyer = true)
+    )
   }
 
   it should "only allow one destroyer (2x1) on the canvas (covers horizontal ship logic)" in {
-    Destroyer.set(false)
+    val firstDestroyer = Ship(Coordinates(Start(x = 0, y = 0), End(x = 1, y = 0)), gameState = Game.createNewBoard).updateLocation()
+    val result = Ship(Coordinates(Start(x = 2, y = 2), End(x = 3, y = 2)), gameState = firstDestroyer).updateLocation()
 
-    val firstDestroyer = Ship(Coordinates(Start(x = 0, y = 0), End(x = 1, y = 0)), canvas = Game.createNewBoard).updateLocation()
-    val result = Ship(Coordinates(Start(x = 2, y = 2), End(x = 3, y = 2)), canvas = firstDestroyer).updateLocation()
-
-    result shouldBe
+    result shouldBe GameState(
       Map(
         (0, 0) -> 1, (1, 0) -> 1, (2, 0) -> 0, (3, 0) -> 0, (4, 0) -> 0, (5, 0) -> 0, (6, 0) -> 0, (7, 0) -> 0, (8, 0) -> 0, (9, 0) -> 0,
         (0, 1) -> 0, (1, 1) -> 0, (2, 1) -> 0, (3, 1) -> 0, (4, 1) -> 0, (5, 1) -> 0, (6, 1) -> 0, (7, 1) -> 0, (8, 1) -> 0, (9, 1) -> 0,
@@ -42,16 +40,16 @@ class DestroyerTest extends AnyFlatSpec with Matchers {
         (0, 7) -> 0, (1, 7) -> 0, (2, 7) -> 0, (3, 7) -> 0, (4, 7) -> 0, (5, 7) -> 0, (6, 7) -> 0, (7, 7) -> 0, (8, 7) -> 0, (9, 7) -> 0,
         (0, 8) -> 0, (1, 8) -> 0, (2, 8) -> 0, (3, 8) -> 0, (4, 8) -> 0, (5, 8) -> 0, (6, 8) -> 0, (7, 8) -> 0, (8, 8) -> 0, (9, 8) -> 0,
         (0, 9) -> 0, (1, 9) -> 0, (2, 9) -> 0, (3, 9) -> 0, (4, 9) -> 0, (5, 9) -> 0, (6, 9) -> 0, (7, 9) -> 0, (8, 9) -> 0, (9, 9) -> 0
-      )
+      ),
+      ShipsPlaced(destroyer = true)
+    )
   }
 
   it should "only allow one destroyer (2x1) on the canvas (covers vertical ship logic)" in {
-    Destroyer.set(false)
+    val firstDestroyer = Ship(Coordinates(Start(x = 0, y = 0), End(x = 0, y = 1)), gameState = Game.createNewBoard).updateLocation()
+    val result = Ship(Coordinates(Start(x = 2, y = 2), End(x = 2, y = 3)), gameState = firstDestroyer).updateLocation()
 
-    val firstDestroyer = Ship(Coordinates(Start(x = 0, y = 0), End(x = 0, y = 1)), canvas = Game.createNewBoard).updateLocation()
-    val result = Ship(Coordinates(Start(x = 2, y = 2), End(x = 2, y = 3)), canvas = firstDestroyer).updateLocation()
-
-    result shouldBe
+    result shouldBe GameState(
       Map(
         (0, 0) -> 1, (1, 0) -> 0, (2, 0) -> 0, (3, 0) -> 0, (4, 0) -> 0, (5, 0) -> 0, (6, 0) -> 0, (7, 0) -> 0, (8, 0) -> 0, (9, 0) -> 0,
         (0, 1) -> 1, (1, 1) -> 0, (2, 1) -> 0, (3, 1) -> 0, (4, 1) -> 0, (5, 1) -> 0, (6, 1) -> 0, (7, 1) -> 0, (8, 1) -> 0, (9, 1) -> 0,
@@ -63,6 +61,8 @@ class DestroyerTest extends AnyFlatSpec with Matchers {
         (0, 7) -> 0, (1, 7) -> 0, (2, 7) -> 0, (3, 7) -> 0, (4, 7) -> 0, (5, 7) -> 0, (6, 7) -> 0, (7, 7) -> 0, (8, 7) -> 0, (9, 7) -> 0,
         (0, 8) -> 0, (1, 8) -> 0, (2, 8) -> 0, (3, 8) -> 0, (4, 8) -> 0, (5, 8) -> 0, (6, 8) -> 0, (7, 8) -> 0, (8, 8) -> 0, (9, 8) -> 0,
         (0, 9) -> 0, (1, 9) -> 0, (2, 9) -> 0, (3, 9) -> 0, (4, 9) -> 0, (5, 9) -> 0, (6, 9) -> 0, (7, 9) -> 0, (8, 9) -> 0, (9, 9) -> 0
-      )
+      ),
+      ShipsPlaced(destroyer = true)
+    )
   }
 }

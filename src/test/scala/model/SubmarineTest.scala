@@ -5,12 +5,10 @@ import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
 class SubmarineTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
-  before(Submarine.set(false))
-
   it should "have a submarine (1 cell) at 2,7" in {
-    val ship = Ship(Coordinates(Start(x = 1, y = 6), End(x = 1, y = 6)), canvas = Game.createNewBoard)
+    val ship = Ship(Coordinates(Start(x = 1, y = 6), End(x = 1, y = 6)), gameState = Game.createNewBoard)
 
-    ship.updateLocation() shouldBe
+    ship.updateLocation() shouldBe GameState(
       Map(
         (0, 0) -> 0, (1, 0) -> 0, (2, 0) -> 0, (3, 0) -> 0, (4, 0) -> 0, (5, 0) -> 0, (6, 0) -> 0, (7, 0) -> 0, (8, 0) -> 0, (9, 0) -> 0,
         (0, 1) -> 0, (1, 1) -> 0, (2, 1) -> 0, (3, 1) -> 0, (4, 1) -> 0, (5, 1) -> 0, (6, 1) -> 0, (7, 1) -> 0, (8, 1) -> 0, (9, 1) -> 0,
@@ -22,14 +20,16 @@ class SubmarineTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
         (0, 7) -> 0, (1, 7) -> 0, (2, 7) -> 0, (3, 7) -> 0, (4, 7) -> 0, (5, 7) -> 0, (6, 7) -> 0, (7, 7) -> 0, (8, 7) -> 0, (9, 7) -> 0,
         (0, 8) -> 0, (1, 8) -> 0, (2, 8) -> 0, (3, 8) -> 0, (4, 8) -> 0, (5, 8) -> 0, (6, 8) -> 0, (7, 8) -> 0, (8, 8) -> 0, (9, 8) -> 0,
         (0, 9) -> 0, (1, 9) -> 0, (2, 9) -> 0, (3, 9) -> 0, (4, 9) -> 0, (5, 9) -> 0, (6, 9) -> 0, (7, 9) -> 0, (8, 9) -> 0, (9, 9) -> 0
-      )
+      ),
+      ShipsPlaced(submarine = true)
+    )
   }
 
   it should "only allow one submarine (1x1) on the canvas" in {
-    val firstSubmarine = Ship(Coordinates(Start(x = 0, y = 0), End(x = 0, y = 0)), canvas = Game.createNewBoard).updateLocation()
-    val result = Ship(Coordinates(Start(x = 2, y = 2), End(x = 2, y = 2)), canvas = firstSubmarine).updateLocation()
+    val firstSubmarine = Ship(Coordinates(Start(x = 0, y = 0), End(x = 0, y = 0)), gameState = Game.createNewBoard).updateLocation()
+    val result = Ship(Coordinates(Start(x = 2, y = 2), End(x = 2, y = 2)), gameState = firstSubmarine).updateLocation()
 
-    result shouldBe
+    result shouldBe GameState(canvas =
       Map(
         (0, 0) -> 1, (1, 0) -> 0, (2, 0) -> 0, (3, 0) -> 0, (4, 0) -> 0, (5, 0) -> 0, (6, 0) -> 0, (7, 0) -> 0, (8, 0) -> 0, (9, 0) -> 0,
         (0, 1) -> 0, (1, 1) -> 0, (2, 1) -> 0, (3, 1) -> 0, (4, 1) -> 0, (5, 1) -> 0, (6, 1) -> 0, (7, 1) -> 0, (8, 1) -> 0, (9, 1) -> 0,
@@ -41,6 +41,8 @@ class SubmarineTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
         (0, 7) -> 0, (1, 7) -> 0, (2, 7) -> 0, (3, 7) -> 0, (4, 7) -> 0, (5, 7) -> 0, (6, 7) -> 0, (7, 7) -> 0, (8, 7) -> 0, (9, 7) -> 0,
         (0, 8) -> 0, (1, 8) -> 0, (2, 8) -> 0, (3, 8) -> 0, (4, 8) -> 0, (5, 8) -> 0, (6, 8) -> 0, (7, 8) -> 0, (8, 8) -> 0, (9, 8) -> 0,
         (0, 9) -> 0, (1, 9) -> 0, (2, 9) -> 0, (3, 9) -> 0, (4, 9) -> 0, (5, 9) -> 0, (6, 9) -> 0, (7, 9) -> 0, (8, 9) -> 0, (9, 9) -> 0
-      )
+      ),
+      ShipsPlaced(submarine = true)
+    )
   }
 }

@@ -5,14 +5,12 @@ import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
 class ShipTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
-  cleanStateForTestExecution
-
   it should "not have ships in adjacent cells" in {
-    lazy val firstShip = Ship(Coordinates(Start(x = 9, y = 6), End(x = 9, y = 9)), canvas = Game.createNewBoard).updateLocation()
-    lazy val secondShip = Ship(Coordinates(Start(x = 8, y = 7), End(x = 8, y = 9)), canvas = firstShip).updateLocation()
-    lazy val result = Ship(Coordinates(Start(x = 0, y = 0), End(x = 1, y = 0)), canvas = secondShip).updateLocation()
+    lazy val firstShip = Ship(Coordinates(Start(x = 9, y = 6), End(x = 9, y = 9)), gameState = Game.createNewBoard).updateLocation()
+    lazy val secondShip = Ship(Coordinates(Start(x = 8, y = 7), End(x = 8, y = 9)), gameState = firstShip).updateLocation()
+    lazy val result = Ship(Coordinates(Start(x = 0, y = 0), End(x = 1, y = 0)), gameState = secondShip).updateLocation()
 
-    result shouldBe
+    result shouldBe GameState(
       Map(
         (0, 0) -> 1, (1, 0) -> 1, (2, 0) -> 0, (3, 0) -> 0, (4, 0) -> 0, (5, 0) -> 0, (6, 0) -> 0, (7, 0) -> 0, (8, 0) -> 0, (9, 0) -> 0,
         (0, 1) -> 0, (1, 1) -> 0, (2, 1) -> 0, (3, 1) -> 0, (4, 1) -> 0, (5, 1) -> 0, (6, 1) -> 0, (7, 1) -> 0, (8, 1) -> 0, (9, 1) -> 0,
@@ -24,13 +22,15 @@ class ShipTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
         (0, 7) -> 0, (1, 7) -> 0, (2, 7) -> 0, (3, 7) -> 0, (4, 7) -> 0, (5, 7) -> 0, (6, 7) -> 0, (7, 7) -> 0, (8, 7) -> 0, (9, 7) -> 1,
         (0, 8) -> 0, (1, 8) -> 0, (2, 8) -> 0, (3, 8) -> 0, (4, 8) -> 0, (5, 8) -> 0, (6, 8) -> 0, (7, 8) -> 0, (8, 8) -> 0, (9, 8) -> 1,
         (0, 9) -> 0, (1, 9) -> 0, (2, 9) -> 0, (3, 9) -> 0, (4, 9) -> 0, (5, 9) -> 0, (6, 9) -> 0, (7, 9) -> 0, (8, 9) -> 0, (9, 9) -> 1
-      )
+      ),
+      ShipsPlaced(destroyer = true, battleship = true)
+    )
   }
 
   it should "only have valid ship types" in {
-    val ship = Ship(Coordinates(Start(x = 9, y = 5), End(x = 9, y = 9)), canvas = Game.createNewBoard)
+    val ship = Ship(Coordinates(Start(x = 9, y = 5), End(x = 9, y = 9)), gameState = Game.createNewBoard)
 
-    ship.updateLocation() shouldBe
+    ship.updateLocation() shouldBe GameState(
       Map(
         (0, 0) -> 0, (1, 0) -> 0, (2, 0) -> 0, (3, 0) -> 0, (4, 0) -> 0, (5, 0) -> 0, (6, 0) -> 0, (7, 0) -> 0, (8, 0) -> 0, (9, 0) -> 0,
         (0, 1) -> 0, (1, 1) -> 0, (2, 1) -> 0, (3, 1) -> 0, (4, 1) -> 0, (5, 1) -> 0, (6, 1) -> 0, (7, 1) -> 0, (8, 1) -> 0, (9, 1) -> 0,
@@ -43,12 +43,6 @@ class ShipTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
         (0, 8) -> 0, (1, 8) -> 0, (2, 8) -> 0, (3, 8) -> 0, (4, 8) -> 0, (5, 8) -> 0, (6, 8) -> 0, (7, 8) -> 0, (8, 8) -> 0, (9, 8) -> 0,
         (0, 9) -> 0, (1, 9) -> 0, (2, 9) -> 0, (3, 9) -> 0, (4, 9) -> 0, (5, 9) -> 0, (6, 9) -> 0, (7, 9) -> 0, (8, 9) -> 0, (9, 9) -> 0
       )
-  }
-
-  private lazy val cleanStateForTestExecution: Unit = before {
-    Submarine.set(false)
-    Destroyer.set(false)
-    Cruiser.set(false)
-    Battleship.set(false)
+    )
   }
 }

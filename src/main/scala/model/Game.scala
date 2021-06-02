@@ -3,28 +3,25 @@ package model
 import model.Canvas._
 import model.Common._
 
-case class GameState(activePlayer: ActivePlayer, playerOneShips: Int, playerTwoShips: Int)
+case class GameState(
+                      canvas: Map[(Int, Int), Int] = Map(),
+                      shipsPlaced: ShipsPlaced = ShipsPlaced()
+                    )
+
 case class ActivePlayer(playerOne: Boolean, playerTwo: Boolean)
 case class PlayerOne(wins: Boolean)
 case class PlayerTwo(wins: Boolean)
 
 object Game {
-  def createNewBoard: Map[(Int, Int), Int] = {
-    Submarine.set(false)
-    Destroyer.set(false)
-    Cruiser.set(false)
-    Battleship.set(false)
-
-    newCanvas
-  }
+  def createNewBoard: GameState = GameState(canvas = newCanvas)
 
   def placeShip(
                startX: String,
                startY: String,
                endX: String,
                endY: String,
-               canvas: Map[(Int, Int), Int]
-             ): Map[(Int, Int), Int] = {
+               gameState: GameState
+             ): GameState = {
     val ship = Ship(
       Coordinates(
         Start(
@@ -36,10 +33,28 @@ object Game {
           y = calculateCoordinates(endY)
         )
       ),
-      canvas
+      gameState
     )
 
     ship.updateLocation()
+  }
+
+  def calculateNeighbours(canvas: Map[(Int, Int), Int]): Set[(Int, Int)] = {
+    val shipLocations: Set[(Int, Int)] = canvas.filter(_._2 == 1).keySet
+
+    shipLocations.flatMap(cell =>
+      Set(
+        (cell._1 - 1, cell._2 - 1),
+        (cell._1, cell._2 - 1),
+        (cell._1 + 1, cell._2 - 1),
+        (cell._1, cell._2 - 1),
+        (cell._1, cell._2),
+        (cell._1, cell._2 + 1),
+        (cell._1 + 1, cell._2 - 1),
+        (cell._1 + 1, cell._2),
+        (cell._1 + 1, cell._2 + 1)
+      )
+    )
   }
 
   def attack(inputX: String, inputY: String, canvas: Map[(Int, Int), Int]): Map[(Int, Int), Int] = {

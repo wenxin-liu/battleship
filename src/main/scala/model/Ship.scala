@@ -1,8 +1,13 @@
 package model
 
-case class ShipStatus()
+case class ShipsPlaced(
+                       submarine: Boolean = false,
+                       destroyer: Boolean = false,
+                       cruiser: Boolean = false,
+                       battleship: Boolean = false
+                     )
 
-class Ship(coordinates: Coordinates, canvas: Map[(Int, Int), Int]) {
+class Ship(coordinates: Coordinates, gameState: GameState) {
   protected val exceedsMaxNumber = false
 
   protected val validLocation: Boolean = {
@@ -12,7 +17,7 @@ class Ship(coordinates: Coordinates, canvas: Map[(Int, Int), Int]) {
         j <- coordinates.start.y to coordinates.end.y
       } yield (i, j)
 
-    val neighbours: Set[(Int, Int)] = Neighbours.calculateNeighbours(canvas)
+    val neighbours: Set[(Int, Int)] = Game.calculateNeighbours(gameState.canvas)
 
     val invalidLocation: Seq[Boolean] =
       for {
@@ -49,11 +54,11 @@ class Ship(coordinates: Coordinates, canvas: Map[(Int, Int), Int]) {
     newCanvas
   }
 
-  def updateLocation(): Map[(Int, Int), Int] = canvas
+  def updateLocation(): GameState = gameState
 }
 
 object Ship {
-  def apply(coordinates: Coordinates, canvas: Map[(Int, Int), Int]): Ship = {
+  def apply(coordinates: Coordinates, gameState: GameState): Ship = {
     val submarine = coordinates.start.x == coordinates.end.x && coordinates.start.y == coordinates.end.y
     val destroyer =
     coordinates.end.x - coordinates.start.x == 1 && coordinates.end.y - coordinates.start.y == 0 |
@@ -67,11 +72,11 @@ object Ship {
 
     coordinates match {
       case _ if submarine =>
-        new Submarine(coordinates, canvas)
-      case _ if destroyer => new Destroyer(coordinates, canvas)
-      case _ if cruiser => new Cruiser(coordinates, canvas)
-      case _ if battleship => new Battleship(coordinates, canvas)
-      case _ => new Ship(coordinates, canvas)
+        new Submarine(coordinates, gameState)
+      case _ if destroyer => new Destroyer(coordinates, gameState)
+      case _ if cruiser => new Cruiser(coordinates, gameState)
+      case _ if battleship => new Battleship(coordinates, gameState)
+      case _ => new Ship(coordinates, gameState)
     }
   }
 }

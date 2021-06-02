@@ -1,31 +1,31 @@
 package controller
 
-import model.Game
+import model.{Game, GameState}
 import view.View
 
 import scala.annotation.tailrec
 import scala.io.StdIn.readLine
 
 object InitialiseGame {
-  @tailrec def initialiseGame(canvas: Map[(Int, Int), Int], ships: Int): Map[(Int, Int), Int] = {
+  @tailrec def initialiseGame(gameState: GameState, ships: Int): GameState = {
     if (ships == 4) {
-      canvas
+      gameState
     } else {
       val input = readLine().split(" ")
 
       input.head match {
         case "M" | "m" =>
-          println(View.render(Game.createNewBoard) + "\n\n")
+          println(View.render(Game.createNewBoard.canvas) + "\n\n")
 
           initialiseGame(Game.createNewBoard, ships)
         case "P" | "p" =>
           val Array(_, startX, startY, endX, endY) = input
-          val newCanvas = Game.placeShip(startX, startY, endX, endY, canvas)
+          val gameWithShip = Game.placeShip(startX, startY, endX, endY, gameState)
 
-          println(View.render(newCanvas) + "\n\n")
+          println(View.render(gameWithShip.canvas) + "\n\n")
 
-          initialiseGame(newCanvas, ships + 1)
-        case _ => initialiseGame(canvas, ships)
+          initialiseGame(gameWithShip, ships + 1)
+        case _ => initialiseGame(gameState, ships)
       }
     }
   }
