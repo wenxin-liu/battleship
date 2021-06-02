@@ -7,25 +7,39 @@ import scala.annotation.tailrec
 import scala.io.StdIn.readLine
 
 object InitialiseGame {
-  @tailrec def initialiseGame(gameState: GameState, ships: Int): GameState = {
-    if (ships == 4) {
-      gameState
+  @tailrec def initialiseGame(currentGameState: GameState): GameState = {
+    val allShipsPlaced =
+      currentGameState.shipsPlaced.submarine &&
+        currentGameState.shipsPlaced.destroyer &&
+        currentGameState.shipsPlaced.cruiser &&
+        currentGameState.shipsPlaced.battleship
+
+    //if all ships are placed, return the current game state as is without any modification
+    if (allShipsPlaced) {
+      currentGameState
     } else {
       val input = readLine().split(" ")
 
       input.head match {
+        //create new board
         case "M" | "m" =>
-          println(View.render(Game.createNewBoard.canvas) + "\n\n")
+          val updatedGameState = Game.createNewBoard
 
-          initialiseGame(Game.createNewBoard, ships)
+          println(View.render(updatedGameState.canvas) + "\n\n")
+
+          initialiseGame(updatedGameState)
+
+        //place ship
         case "P" | "p" =>
           val Array(_, startX, startY, endX, endY) = input
-          val gameWithShip = Game.placeShip(startX, startY, endX, endY, gameState)
+          val updatedGameState = Game.placeShip(startX, startY, endX, endY, currentGameState)
 
-          println(View.render(gameWithShip.canvas) + "\n\n")
+          println(View.render(updatedGameState.canvas) + "\n\n")
 
-          initialiseGame(gameWithShip, ships + 1)
-        case _ => initialiseGame(gameState, ships)
+          initialiseGame(updatedGameState)
+
+        //in all other cases, try again
+        case _ => initialiseGame(currentGameState)
       }
     }
   }

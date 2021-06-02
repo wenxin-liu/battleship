@@ -10,29 +10,30 @@ object PlayGame {
   @tailrec def playGame(
                          playerOneOriginalCanvas: Map[(Int, Int), Int],
                          playerTwoOriginalCanvas: Map[(Int, Int), Int],
-                         activePlayerState: ActivePlayer
+                         activePlayer: ActivePlayer
                        ): Any = {
     val playerOneWins: Boolean = !playerTwoOriginalCanvas.valuesIterator.exists(_ == 1)
     val playerTwoWins: Boolean = !playerOneOriginalCanvas.valuesIterator.exists(_ == 1)
 
     val attack = (x: String, y: String, canvas: Map[(Int, Int), Int]) => {
-      val newCanvas = Game.attack(x, y, canvas)
+      val updatedCanvas = Game.attack(x, y, canvas)
 
-      println(View.renderAttack(newCanvas) + "\n")
+      println(View.renderAttack(updatedCanvas) + "\n")
       Thread.sleep(5000)
       println("\n\n")
 
       //If player one was the active player, so activePlayerState.playerOne = true
       //make activePlayerState.playerOne = false
       //If player two was not the active player, so activePlayerState.playerTwo = false
-      //now make activePlayerState.playerTwo = true, changing player two to be the active player
+      //now make activePlayerState.playerTwo = true
+      //changing the active player from player one to player two
 
-      (newCanvas, ActivePlayer(playerOne = !activePlayerState.playerOne, playerTwo = !activePlayerState.playerTwo))
+      (updatedCanvas, ActivePlayer(playerOne = !activePlayer.playerOne, playerTwo = !activePlayer.playerTwo))
     }
 
     if (playerOneWins) println(playerOneWinMessage)
     else if (playerTwoWins) println(playerTwoWinMessage)
-    else if (activePlayerState.playerOne) {
+    else if (activePlayer.playerOne) {
       println("Player 1, please attack one coordinate on player 2's board:\n\n")
       println(View.renderAttack(playerTwoOriginalCanvas) + "\n\n")
 
@@ -43,14 +44,14 @@ object PlayGame {
           val Array(_, xCoordinate, yCoordinate) = input
           val result = attack(xCoordinate, yCoordinate, playerTwoOriginalCanvas)
 
-          val playerTwoNewCanvas = result._1
-          val activePlayerNewState = result._2
+          val playerTwoUpdatedCanvas = result._1
+          val newActivePlayer = result._2
 
-          playGame(playerOneOriginalCanvas, playerTwoNewCanvas, activePlayerNewState)
+          playGame(playerOneOriginalCanvas, playerTwoUpdatedCanvas, newActivePlayer)
 
-        case _ => playGame(playerOneOriginalCanvas, playerTwoOriginalCanvas, activePlayerState)
+        case _ => playGame(playerOneOriginalCanvas, playerTwoOriginalCanvas, activePlayer)
       }
-    } else if (activePlayerState.playerTwo) {
+    } else if (activePlayer.playerTwo) {
       println("Player 2, please attack one coordinate on player 1's board: ")
       println(View.renderAttack(playerOneOriginalCanvas) + "\n\n")
 
@@ -61,12 +62,12 @@ object PlayGame {
           val Array(_, xCoordinate, yCoordinate) = input
           val result = attack(xCoordinate, yCoordinate, playerOneOriginalCanvas)
 
-          val playerOneNewCanvas = result._1
-          val activePlayerNewState = result._2
+          val playerOneUpdatedCanvas = result._1
+          val newActivePlayer = result._2
 
-          playGame(playerOneNewCanvas, playerTwoOriginalCanvas, activePlayerNewState)
+          playGame(playerOneUpdatedCanvas, playerTwoOriginalCanvas, newActivePlayer)
 
-        case _ => playGame(playerOneOriginalCanvas, playerTwoOriginalCanvas, activePlayerState)
+        case _ => playGame(playerOneOriginalCanvas, playerTwoOriginalCanvas, activePlayer)
       }
     } else println("error")
   }
