@@ -2,7 +2,7 @@ package controller
 
 import controller.InitialiseGame.initialiseGame
 import controller.PlayGame.playGame
-import model.{ActivePlayer, AttackPhase, PlacementPhase}
+import model.{AttackPhase, PlacementPhase, PlayerOne}
 
 object Controller {
   def apply: Any = {
@@ -30,7 +30,7 @@ object Controller {
       AttackPhase(
         playerOneCanvas = playerOneState.canvas,
         playerTwoCanvas = playerTwoState.canvas,
-        activePlayer = ActivePlayer(playerOne = true)
+        activePlayer = PlayerOne
       )
     )
   }

@@ -1,7 +1,7 @@
 package it
 
 import model.Game.{attack, createNewBoard, placeShip}
-import model.{ActivePlayer, AttackPhase}
+import model.{AttackPhase, PlayerOne, PlayerTwo}
 import org.scalatest.BeforeAndAfter
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -35,14 +35,14 @@ class GameFunctionalTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
         AttackPhase(
           playerOneCanvas = sixthShip.canvas,
           playerTwoCanvas = Map(),
-          activePlayer = ActivePlayer(playerOne = true)
+          activePlayer = PlayerTwo
         )
     )
 
     val attackTwo = attack(
       coordinateX = "B",
       coordinateY = "2",
-      gameState = attackOne.copy(activePlayer = ActivePlayer(playerOne = true))
+      gameState = attackOne.copy(activePlayer = PlayerTwo)
     )
 
     attackTwo.playerOneCanvas shouldBe

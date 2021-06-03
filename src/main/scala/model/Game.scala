@@ -3,10 +3,9 @@ package model
 import model.Canvas._
 import model.Common._
 
-case class ActivePlayer(
-                         playerOne: Boolean = false,
-                         playerTwo: Boolean = false
-                       )
+sealed trait ActivePlayer
+case object PlayerOne extends ActivePlayer
+case object PlayerTwo extends ActivePlayer
 
 case class AttackPhase(
                         playerOneCanvas: Map[(Int, Int), Int],
@@ -76,12 +75,20 @@ object Game {
       }
 
     gameState match {
-      case AttackPhase(playerOneCanvas, playerTwoCanvas, ActivePlayer(playerOne, playerTwo))
-        if playerOne && !playerTwo =>
-        AttackPhase(playerOneCanvas, updateCanvas(playerTwoCanvas), ActivePlayer(playerTwo = true))
-      case AttackPhase(playerOneCanvas, playerTwoCanvas, ActivePlayer(playerOne, playerTwo))
-        if !playerOne && playerTwo =>
-        AttackPhase(updateCanvas(playerOneCanvas), playerTwoCanvas, ActivePlayer(playerOne = true))
+      case AttackPhase(playerOneCanvas, playerTwoCanvas, activePlayer) if activePlayer == PlayerOne =>
+        AttackPhase(
+          playerOneCanvas = playerOneCanvas,
+          playerTwoCanvas = updateCanvas(playerTwoCanvas),
+          activePlayer = PlayerTwo
+        )
+
+      case AttackPhase(playerOneCanvas, playerTwoCanvas, activePlayer) if activePlayer == PlayerTwo =>
+        AttackPhase(
+          playerOneCanvas = updateCanvas(playerOneCanvas),
+          playerTwoCanvas = playerTwoCanvas,
+          activePlayer = PlayerOne
+        )
+
       case _ => gameState
     }
   }

@@ -1,7 +1,7 @@
 package controller
 
 import model.Game.attack
-import model.AttackPhase
+import model.{AttackPhase, PlayerOne, PlayerTwo}
 import view.View.renderAttack
 
 import scala.annotation.tailrec
@@ -14,7 +14,7 @@ object PlayGame {
 
     if (playerOneWins) println(playerOneWinMessage)
     else if (playerTwoWins) println(playerTwoWinMessage)
-    else if (gameState.activePlayer.playerOne) {
+    else if (gameState.activePlayer == PlayerOne) {
       println("Player 1, please attack one coordinate on player 2's board:\n\n")
       println(renderAttack(gameState.playerTwoCanvas) + "\n\n")
 
@@ -34,7 +34,7 @@ object PlayGame {
 
         case _ => playGame(gameState)
       }
-    } else if (gameState.activePlayer.playerTwo) {
+    } else if (gameState.activePlayer == PlayerTwo) {
       println("Player 2, please attack one coordinate on player 1's board: ")
       println(renderAttack(gameState.playerOneCanvas) + "\n\n")
 

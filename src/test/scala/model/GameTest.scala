@@ -64,7 +64,7 @@ class GameTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
         (0, 9) -> 0, (1, 9) -> 0, (2, 9) -> 0, (3, 9) -> 0, (4, 9) -> 0, (5, 9) -> 0, (6, 9) -> 0, (7, 9) -> 0, (8, 9) -> 0, (9, 9) -> 0
       ),
       playerTwoCanvas = Map(),
-      activePlayer = ActivePlayer(playerOne = true)
+      activePlayer = PlayerTwo
     )
 
     val result = AttackPhase(
@@ -81,7 +81,7 @@ class GameTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
         (0, 9) -> 0, (1, 9) -> 0, (2, 9) -> 0, (3, 9) -> 0, (4, 9) -> 0, (5, 9) -> 0, (6, 9) -> 0, (7, 9) -> 0, (8, 9) -> 0, (9, 9) -> 0
       ),
       playerTwoCanvas = Map(),
-      activePlayer = ActivePlayer(playerTwo = true)
+      activePlayer = PlayerOne
     )
 
     val attack = Game.attack("A", "1", initial)
@@ -103,7 +103,7 @@ class GameTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
         (0, 9) -> 0, (1, 9) -> 0, (2, 9) -> 0, (3, 9) -> 0, (4, 9) -> 0, (5, 9) -> 0, (6, 9) -> 0, (7, 9) -> 0, (8, 9) -> 0, (9, 9) -> 0
       ),
       playerTwoCanvas = Map(),
-      activePlayer = ActivePlayer(playerOne = true)
+      activePlayer = PlayerTwo
     )
 
     val result = AttackPhase(
@@ -120,7 +120,7 @@ class GameTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
         (0, 9) -> 0, (1, 9) -> 0, (2, 9) -> 0, (3, 9) -> 0, (4, 9) -> 0, (5, 9) -> 0, (6, 9) -> 0, (7, 9) -> 0, (8, 9) -> 0, (9, 9) -> 0
       ),
       playerTwoCanvas = Map(),
-      activePlayer = ActivePlayer(playerTwo = true)
+      activePlayer = PlayerOne
     )
 
     val attack = Game.attack("A", "2", initial)
