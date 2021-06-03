@@ -3,6 +3,7 @@ package model
 class Submarine(coordinates: Coordinates, gameState: PlacementPhase) extends Ship(coordinates, gameState) {
   private val submarine: Boolean =
     coordinates.start.x == coordinates.end.x && coordinates.start.y == coordinates.end.y
+
   protected override val exceedsMaxNumber: Boolean = gameState.shipsPlaced.submarine
 
   override def updateLocation(): PlacementPhase = {
@@ -24,11 +25,3 @@ class Submarine(coordinates: Coordinates, gameState: PlacementPhase) extends Shi
     }
   }
 }
-
-//object Submarine {
-//  private var isPlaced = false
-//
-//  def set(value: Boolean): Unit = isPlaced = value
-//
-//  def get: Boolean = isPlaced
-//}

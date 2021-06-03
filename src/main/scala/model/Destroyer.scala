@@ -3,8 +3,10 @@ package model
 class Destroyer(coordinates: Coordinates, gameState: PlacementPhase) extends Ship(coordinates, gameState) {
   private val horizontalDestroyer =
     coordinates.end.x - coordinates.start.x == 1 && coordinates.end.y - coordinates.start.y == 0
+
   private val verticalDestroyer =
     coordinates.end.y - coordinates.start.y == 1 && coordinates.end.x - coordinates.start.x == 0
+
   protected override val exceedsMaxNumber: Boolean = gameState.shipsPlaced.destroyer
 
   override def updateLocation(): PlacementPhase = {
@@ -24,11 +26,3 @@ class Destroyer(coordinates: Coordinates, gameState: PlacementPhase) extends Shi
     }
   }
 }
-
-//object Destroyer {
-//  private var isPlaced = false
-//
-//  def set(value: Boolean): Unit = isPlaced = value
-//
-//  def get: Boolean = isPlaced
-//}

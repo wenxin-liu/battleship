@@ -1,7 +1,7 @@
 package controller
 
 import model.{Game, PlacementPhase}
-import view.View
+import view.PlacementPhase.{renderPlacement, switchPlayer}
 
 import scala.annotation.tailrec
 import scala.io.StdIn.readLine
@@ -16,6 +16,8 @@ object InitialiseGame {
 
     //if all ships are placed, return the current game state as is without any modification
     if (allShipsPlaced) {
+      switchPlayer()
+
       currentGameState
     } else {
       val input = readLine().split(" ")
@@ -25,7 +27,7 @@ object InitialiseGame {
         case "M" | "m" =>
           val updatedGameState = Game.createNewBoard
 
-          println(View.render(updatedGameState.canvas) + "\n\n")
+          renderPlacement(updatedGameState.canvas)
 
           initialiseGame(updatedGameState)
 
@@ -34,7 +36,7 @@ object InitialiseGame {
           val Array(_, startX, startY, endX, endY) = input
           val updatedGameState = Game.placeShip(startX, startY, endX, endY, currentGameState)
 
-          println(View.render(updatedGameState.canvas) + "\n\n")
+          renderPlacement(updatedGameState.canvas)
 
           initialiseGame(updatedGameState)
 

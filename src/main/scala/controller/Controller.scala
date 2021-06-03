@@ -3,28 +3,17 @@ package controller
 import controller.InitialiseGame.initialiseGame
 import controller.PlayGame.playGame
 import model.{AttackPhase, PlacementPhase, PlayerOne}
+import view.PlacementPhase.{playerOneWelcomeMessage, playerTwoWelcomeMessage, welcomeMessage}
 
 object Controller {
   def apply: Any = {
-    println(title)
+    welcomeMessage()
 
-    println("Player 1, please create a new board and place your ships")
+    playerOneWelcomeMessage()
     val playerOneState = initialiseGame(currentGameState = PlacementPhase())
 
-    Thread.sleep(5000)
-    for {_ <- 1 to 15} {
-      println("\n")
-      Thread.sleep(900)
-    }
-
-    println("Player 2, please create a new board and place your ships")
+    playerTwoWelcomeMessage()
     val playerTwoState = initialiseGame(currentGameState = PlacementPhase())
-
-    Thread.sleep(5000)
-    for {_ <- 1 to 15} {
-      println("\n")
-      Thread.sleep(900)
-    }
 
     playGame(
       AttackPhase(
@@ -34,14 +23,4 @@ object Controller {
       )
     )
   }
-
-  val title: String =
-    """
-      |██████╗░░█████╗░████████╗████████╗██╗░░░░░███████╗░██████╗██╗░░██╗██╗██████╗░
-      |██╔══██╗██╔══██╗╚══██╔══╝╚══██╔══╝██║░░░░░██╔════╝██╔════╝██║░░██║██║██╔══██╗
-      |██████╦╝███████║░░░██║░░░░░░██║░░░██║░░░░░█████╗░░╚█████╗░███████║██║██████╔╝
-      |██╔══██╗██╔══██║░░░██║░░░░░░██║░░░██║░░░░░██╔══╝░░░╚═══██╗██╔══██║██║██╔═══╝░
-      |██████╦╝██║░░██║░░░██║░░░░░░██║░░░███████╗███████╗██████╔╝██║░░██║██║██║░░░░░
-      |╚═════╝░╚═╝░░╚═╝░░░╚═╝░░░░░░╚═╝░░░╚══════╝╚══════╝╚═════╝░╚═╝░░╚═╝╚═╝╚═╝░░░░░
-      |""".stripMargin + "\n\n\n"
 }
