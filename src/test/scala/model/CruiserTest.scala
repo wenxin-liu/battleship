@@ -1,10 +1,9 @@
 package model
 
-import org.scalatest.BeforeAndAfter
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
-class CruiserTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
+class CruiserTest extends AnyFlatSpec with Matchers {
   it should "have a cruiser (3 cells) at 6,7 to 8,7" in {
     val ship = Ship(Coordinates(Start(x = 5, y = 6), End(x = 7, y = 6)), gameState = Game.createNewBoard)
 

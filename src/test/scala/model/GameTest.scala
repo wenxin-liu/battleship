@@ -1,10 +1,9 @@
 package model
 
-import org.scalatest.BeforeAndAfter
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
-class GameTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
+class GameTest extends AnyFlatSpec with Matchers {
   "A canvas" should "be a 10 x 10 canvas" in {
     val canvas = Map(
       (0, 0) -> 0, (1, 0) -> 0, (2, 0) -> 0, (3, 0) -> 0, (4, 0) -> 0, (5, 0) -> 0, (6, 0) -> 0, (7, 0) -> 0, (8, 0) -> 0, (9, 0) -> 0,

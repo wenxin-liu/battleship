@@ -2,7 +2,7 @@ package controller
 
 import model.Game.attack
 import model.{AttackPhase, PlayerOne, PlayerTwo}
-import view.AttackPhase.{playerOneWinMessage, playerTwoWinMessage, renderPostAttack, renderPreAttack}
+import view.AttackPhase.{playerOneWinMessage, playerTwoWinMessage, printCanvasPostAttack, printCanvasPreAttack}
 
 import scala.annotation.tailrec
 import scala.io.StdIn.readLine
@@ -15,7 +15,7 @@ object PlayGame {
     if (playerOneWins) playerOneWinMessage()
     else if (playerTwoWins) playerTwoWinMessage()
     else if (gameState.activePlayer == PlayerOne) {
-      renderPreAttack(gameState.playerTwoCanvas, activePlayer = gameState.activePlayer)
+      printCanvasPreAttack(gameState.playerTwoCanvas, activePlayer = gameState.activePlayer)
 
       val input = readLine().split(" ")
 
@@ -25,14 +25,14 @@ object PlayGame {
 
           val updatedGameState = attack(xCoordinate, yCoordinate, gameState)
 
-          renderPostAttack(updatedGameState.playerTwoCanvas)
+          printCanvasPostAttack(updatedGameState.playerTwoCanvas)
 
           playGame(updatedGameState)
 
         case _ => playGame(gameState)
       }
     } else if (gameState.activePlayer == PlayerTwo) {
-      renderPreAttack(gameState.playerOneCanvas, activePlayer = gameState.activePlayer)
+      printCanvasPreAttack(gameState.playerOneCanvas, activePlayer = gameState.activePlayer)
 
       val input = readLine().split(" ")
 
@@ -41,7 +41,7 @@ object PlayGame {
           val Array(_, xCoordinate, yCoordinate) = input
           val updatedGameState = attack(xCoordinate, yCoordinate, gameState)
 
-          renderPostAttack(updatedGameState.playerOneCanvas)
+          printCanvasPostAttack(updatedGameState.playerOneCanvas)
 
           playGame(updatedGameState)
 

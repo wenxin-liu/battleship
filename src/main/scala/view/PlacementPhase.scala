@@ -1,9 +1,9 @@
 package view
 
 object PlacementPhase {
-  def renderPlacement(canvas: Map[(Int, Int), Int]): Unit = println(renderCanvas(canvas)+ "\n\n")
+  def printCanvas(canvas: Map[(Int, Int), Int]): Unit = println(convertCanvasType(canvas)+ "\n\n")
 
-  def renderCanvas(canvas: Map[(Int, Int), Int]): String = {
+  def convertCanvasType(canvas: Map[(Int, Int), Int]): String = {
     val topBorder: String = "\u0020\u0020\u0020\u0020" + (for {i <- 'A' to 'J'} yield i).mkString("\u0020\u0020")
 
     val row: IndexedSeq[String] = for {

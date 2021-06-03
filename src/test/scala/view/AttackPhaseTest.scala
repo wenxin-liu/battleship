@@ -31,7 +31,7 @@ class AttackPhaseTest extends AnyFlatSpec with Matchers {
         | 9  -  -  -  -  -  -  -  -  -  -
         |10  -  -  -  -  -  -  -  -  -  -""".stripMargin
 
-    AttackPhase.renderCanvas(data) shouldBe canvas
+    AttackPhase.convertCanvasType(data) shouldBe canvas
   }
 
   it should "render hits and misses on the attack canvas correctly" in {
@@ -61,6 +61,6 @@ class AttackPhaseTest extends AnyFlatSpec with Matchers {
         | 9  -  -  -  -  -  -  -  -  -  -
         |10  -  -  -  -  -  -  o  -  -  -""".stripMargin
 
-    AttackPhase.renderCanvas(data) shouldBe canvas
+    AttackPhase.convertCanvasType(data) shouldBe canvas
   }
 }

@@ -1,12 +1,11 @@
 package it
 
 import model.Game.{attack, createNewBoard, placeShip}
-import model.{AttackPhase, PlayerOne, PlayerTwo}
-import org.scalatest.BeforeAndAfter
+import model.{AttackPhase, PlayerTwo}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
-class GameFunctionalTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
+class GameFunctionalTest extends AnyFlatSpec with Matchers {
   "A Game" should "be able to create a new canvas, place 4 types of ships, only one per type, then attack" in {
     val newCanvas = createNewBoard
 

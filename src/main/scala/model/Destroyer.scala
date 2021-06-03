@@ -1,10 +1,10 @@
 package model
 
 class Destroyer(coordinates: Coordinates, gameState: PlacementPhase) extends Ship(coordinates, gameState) {
-  private val horizontalDestroyer =
+  private val isHorizontalDestroyer: Boolean =
     coordinates.end.x - coordinates.start.x == 1 && coordinates.end.y - coordinates.start.y == 0
 
-  private val verticalDestroyer =
+  private val isVerticalDestroyer: Boolean =
     coordinates.end.y - coordinates.start.y == 1 && coordinates.end.x - coordinates.start.x == 0
 
   protected override val exceedsMaxNumber: Boolean = gameState.shipsPlaced.destroyer
@@ -12,12 +12,12 @@ class Destroyer(coordinates: Coordinates, gameState: PlacementPhase) extends Shi
   override def updateLocation(): PlacementPhase = {
     coordinates match {
       case _ if !validLocation | exceedsMaxNumber => gameState
-      case _ if horizontalDestroyer =>
+      case _ if isHorizontalDestroyer =>
         val newCanvas = updateHorizontalShip(gameState.canvas)
         val destroyerPlaced = gameState.shipsPlaced.copy(destroyer = true)
 
         gameState.copy(canvas = newCanvas, shipsPlaced = destroyerPlaced)
-      case _ if verticalDestroyer =>
+      case _ if isVerticalDestroyer =>
         val newCanvas = updateVerticalShip(gameState.canvas)
         val destroyerPlaced = gameState.shipsPlaced.copy(destroyer = true)
 

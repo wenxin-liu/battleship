@@ -31,6 +31,6 @@ class PlacementPhaseTest extends AnyFlatSpec with Matchers {
         | 9  0  0  0  0  0  0  0  0  0  0
         |10  0  0  0  0  0  0  0  0  0  0""".stripMargin
 
-    PlacementPhase.renderCanvas(data) shouldBe canvas
+    PlacementPhase.convertCanvasType(data) shouldBe canvas
   }
 }

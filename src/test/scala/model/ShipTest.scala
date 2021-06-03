@@ -1,10 +1,9 @@
 package model
 
-import org.scalatest.BeforeAndAfter
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
-class ShipTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
+class ShipTest extends AnyFlatSpec with Matchers {
   it should "not have ships in adjacent cells" in {
     lazy val firstShip = Ship(Coordinates(Start(x = 9, y = 6), End(x = 9, y = 9)), gameState = Game.createNewBoard).updateLocation()
     lazy val secondShip = Ship(Coordinates(Start(x = 8, y = 7), End(x = 8, y = 9)), gameState = firstShip).updateLocation()

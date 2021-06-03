@@ -1,7 +1,8 @@
 package controller
 
-import model.{Game, PlacementPhase}
-import view.PlacementPhase.{renderPlacement, switchPlayer}
+import model.Game.{createNewBoard, placeShip}
+import model.PlacementPhase
+import view.PlacementPhase.{printCanvas, switchPlayer}
 
 import scala.annotation.tailrec
 import scala.io.StdIn.readLine
@@ -25,18 +26,18 @@ object InitialiseGame {
       input.head match {
         //create new board
         case "M" | "m" =>
-          val updatedGameState = Game.createNewBoard
+          val updatedGameState = createNewBoard
 
-          renderPlacement(updatedGameState.canvas)
+          printCanvas(updatedGameState.canvas)
 
           initialiseGame(updatedGameState)
 
         //place ship
         case "P" | "p" =>
           val Array(_, startX, startY, endX, endY) = input
-          val updatedGameState = Game.placeShip(startX, startY, endX, endY, currentGameState)
+          val updatedGameState = placeShip(startX, startY, endX, endY, currentGameState)
 
-          renderPlacement(updatedGameState.canvas)
+          printCanvas(updatedGameState.canvas)
 
           initialiseGame(updatedGameState)
 

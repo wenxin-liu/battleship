@@ -1,10 +1,9 @@
 package model
 
-import org.scalatest.BeforeAndAfter
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
-class SubmarineTest extends AnyFlatSpec with Matchers with BeforeAndAfter {
+class SubmarineTest extends AnyFlatSpec with Matchers {
   it should "have a submarine (1 cell) at 2,7" in {
     val ship = Ship(Coordinates(Start(x = 1, y = 6), End(x = 1, y = 6)), gameState = Game.createNewBoard)
 

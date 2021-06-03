@@ -1,7 +1,7 @@
 package model
 
 class Submarine(coordinates: Coordinates, gameState: PlacementPhase) extends Ship(coordinates, gameState) {
-  private val submarine: Boolean =
+  private val isSubmarine: Boolean =
     coordinates.start.x == coordinates.end.x && coordinates.start.y == coordinates.end.y
 
   protected override val exceedsMaxNumber: Boolean = gameState.shipsPlaced.submarine
@@ -9,7 +9,7 @@ class Submarine(coordinates: Coordinates, gameState: PlacementPhase) extends Shi
   override def updateLocation(): PlacementPhase = {
     coordinates match {
       case _ if !validLocation | exceedsMaxNumber => gameState
-      case _ if submarine =>
+      case _ if isSubmarine =>
         var newCanvas = gameState.canvas
 
         newCanvas = newCanvas.transform {
